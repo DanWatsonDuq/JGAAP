@@ -249,7 +249,7 @@ public class ExperimentEngine {
 				} else {
 					resultDocuments = experiment.getUnknownDocuments();
 				}
-				Path filePath = FileSystems.getDefault().getPath(fileName);
+				Path filePath = FileSystems.getDefault().getPath(fileName.replace("[|:", "="));
 				Writer writer = Files.newBufferedWriter(filePath, Charset.defaultCharset(), StandardOpenOption.CREATE);
 				for (Document resultDocument : resultDocuments) {
 					writer.append(resultDocument.getFormattedResult(analysisDriver));
