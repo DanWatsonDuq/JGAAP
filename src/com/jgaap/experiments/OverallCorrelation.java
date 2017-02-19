@@ -40,30 +40,37 @@ public class OverallCorrelation{
      * diagonal
      * @return average correlation*
      */
-    public static double avgCor(double[][] corMat){
+    public static double arithmeticMean(double[][] corMat){
         double sum = 0;
+        double n = 0;
         
         for (int i = 0; i < corMat.length; i++){
-            for (int j = 0; j < corMat[i].length; j++){
-                if (i == j)
-                    continue;
+            for (int j = 0; j < corMat[i].length && j < i; j++){
                 sum += Math.abs(corMat[i][j]);
+                n++;
+            }
+        }
+
+        return sum / n; 
+        //return sum / (n * n - n);
+    }
+
+
+    /**
+     * Finds geometric mean of all values in double matrix, except those along
+     * the diagonal.
+     */
+    public static double geometricMean(double[][] corMat){
+        double product = 1;
+        double n = 0; 
+        
+        for (int i = 0; i < corMat.length; i++){
+            for (int j = 0; j < corMat[i].length && j < i; j++){
+                product *= corMat[i][j];
+                n++;
             }
         }
         
-        double n = corMat.length;
-        
-        return sum / (n * n - n); // due to mirrored data, same avg as 1/2 data
-    }
-    
-    public static void main(String[] args){
-        double[][] maxArr = {
-            {1,     -.5,   .99},
-            {-.5,   1,     .42},
-            {.99,    .42,    1}
-        };
-
-        System.out.println(maxCor(maxArr));
-        System.out.println(avgCor(maxArr));
+        return Math.pow(Math.abs(product), 1/n);
     }
 }
