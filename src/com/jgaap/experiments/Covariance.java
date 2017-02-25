@@ -48,7 +48,6 @@ class Covariance {
 	public static double[][] process(MultiLog ml, boolean export) {
 
 		System.out.println("Begin Processing MultiLog");
-		double percentComplete = 0, percentCompletej = 0;
 		/*
 		 * pwCovariance 2d Matrix of the covariance between pairs pwCorrelation
 		 * 2d Matrix of the correlation between pairs
@@ -65,12 +64,10 @@ class Covariance {
 		 */
 		// double[][] pwCovariance =
 		// new double[ml.logs.size()][ml.logs.size()];
-		double[][] pwCorrelation = new double[ml.logs.size()][ml.logs.size()];
-		double sigX, sigY;
-		int[] incorrect = new int[ml.logs.size()];
+		double[][] pwCov = new double[ml.logs.size()][ml.logs.size()];
+		
 		int[] correct = new int[ml.logs.size()];
-		boolean[] checked = new boolean[ml.logs.size()];
-		boolean[] ignore = new boolean[ml.logs.size()];
+	
 		int totalCorrect;
 
 		ArrayList<String> logDataNames = new ArrayList<>();
@@ -92,7 +89,7 @@ class Covariance {
 			for (int j = 0; j < ml.logs.size(); j++) { // L-1
 				if (j == i) {
 					// pwCovariance[i][j] = 1;
-					pwCorrelation[i][j] = 1;
+					pwCov[i][j] = 1;
 					continue;
 				}
 				totalCorrect = 0;
@@ -103,17 +100,11 @@ class Covariance {
 				}
 				double n = (double) ml.logs.get(i).tests.size();
 
-				double ex = correct[i] / n;
-				double ey = correct[j] / n;
-				// TODO: Figure out with certainty what this denomenator should
-				// be.
-				double exy = totalCorrect / n;
-				// pwCovariance[i][j] = cov(ex, ey, exy);
-
-				// Compute Correlation : std. dev = sqrt(n * P * (1 - P))
-				sigX = Math.sqrt(n * ex * (1 - ex));
-				sigY = Math.sqrt(n * ey * (1 - ey));
-				pwCorrelation[i][j] = cov(ex, ey, exy) / (sigX * sigY);
+				double ex = (correct[i]+1) / (n+1);
+				double ey = (correct[j]+1) / (n+1);
+				
+				double exy = (totalCorrect+1) / (n+1);				
+				pwCov[i][j] = cov(ex, ey, exy);
 			}
 		}
 
@@ -123,11 +114,11 @@ class Covariance {
 		 */
 
 		if (export) {
-			exportCSV(pwCorrelation, logDataNames, ml.name);
+			exportCSV(pwCov, logDataNames, ml.name);
 		}
 
 		// return pwCovariance;
-		return pwCorrelation;
+		return pwCov;
 	}
 
 	public static double[][] process(MultiLog ml) {
@@ -242,17 +233,7 @@ class Covariance {
 		if (mat.length == methods.size() && mat[0].length == methods.size()) {
 
 			try {
-				File csvFile = new File(name + ".csv");
-				int ver;
-				while (csvFile.exists()) {
-					if (csvFile.getName().contains("_pwi_")) {
-						ver = Integer.parseInt(csvFile.getName().substring(csvFile.getName().lastIndexOf('_') + 1, csvFile.getName().lastIndexOf('.')));
-						csvFile = new File(name + "_pwi_" + (ver + 1) + ".csv");
-					} else {
-						csvFile = new File(name + "_pwi_1.csv");
-					}
-				}
-
+				File csvFile = new File(name + "_pwCov_1.csv");
 				PrintWriter pw = new PrintWriter(csvFile);
 
 				// print header row
