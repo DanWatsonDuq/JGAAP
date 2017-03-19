@@ -1,11 +1,3 @@
-/**
- * Given a MultiLog object, uses two-porportion z-test to determine the 
- * independence between all pairs of methods depicted in the logs on same
- * test set. This requires same test, and same number of Tests for each 
- * method.
- *
- * @author Derek S. Prijatelj
- */
 package com.jgaap.experiments;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +7,14 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.File;
 
+/**
+ * Given a MultiLog object, uses two-porportion z-test to determine the 
+ * independence between all pairs of methods depicted in the logs on same
+ * test set. This requires same test, and same number of Tests for each 
+ * method.
+ *
+ * @author Derek S. Prijatelj
+ */
 class PairwiseIndependence{
     /*
      * TODO 
