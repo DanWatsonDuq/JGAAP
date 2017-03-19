@@ -72,11 +72,11 @@ public class JGAAPTester {
 //		 for (File f : allFiles)
 //			 Files.move(f, new File(logTarget + f.getName()));
 		 MultiLog ml = new MultiLog(logTarget,"scifi",false);
+		 System.out.println("data Processed");
+		 Covariance.process(ml,true);
+		 System.out.println("Cov processed");
 		 double [][] results = Correlation.process(ml);
 		 double[] pVector = Correlation.pVector(ml);
-		 for (int i = 0; i < pVector.length; i++) {
-			 System.out.print(pVector[i]+",");
-		}
 		 
 	}
 

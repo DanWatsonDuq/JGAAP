@@ -76,7 +76,7 @@ class Correlation {
 		for (int i = 0; i < numTrials; i++)
 			for (int j = 0; j < numTrials; j++)
 				cor[i][j] = correlate(correct[i], correct[j]);
-		//exportCSV(cor, logDataNames, ml.name);
+		exportCSV(cor, logDataNames, ml.name);
 		return cor;
 	}
 
@@ -102,8 +102,12 @@ class Correlation {
 			sumSquaredDevY += Math.pow(ys[i] - py, 2);
 		}
 
-		double sigX = Math.sqrt(sumSquaredDevX / (n - 1));
-		double sigY = Math.sqrt(sumSquaredDevY / (n - 1));
+		double sigX = Math.sqrt((sumSquaredDevX) / (n - 1));
+		double sigY = Math.sqrt((sumSquaredDevY) / (n - 1));
+		
+		sigX = sigX==0?1/n:sigX;
+		sigY = sigY==0?1/n:sigY;
+		
 		double r = 0;
 
 		for (int i = 0; i < n; i++) {
@@ -173,17 +177,7 @@ class Correlation {
 
 			try {
 				File csvFile = new File(name + ".csv");
-				int ver;
-				while (csvFile.exists()) {
-					if (csvFile.getName().contains("_pwi_")) {
-						ver = Integer.parseInt(csvFile.getName().substring(csvFile.getName().lastIndexOf('_') + 1,
-								csvFile.getName().lastIndexOf('.')));
-						csvFile = new File(name + "_pwi_" + (ver + 1) + ".csv");
-					} else {
-						csvFile = new File(name + "_pwi_1.csv");
-					}
-				}
-
+				csvFile = new File(name + "_pwCor_1.csv");
 				PrintWriter pw = new PrintWriter(csvFile);
 
 				// print header row
