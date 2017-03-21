@@ -1,9 +1,12 @@
 package com.jgaap.experiments;
 
-import java.util.Scanner;
-import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.File;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.util.HashMap;
+
 
 /**
  * Separates the given document into specified smaller parts, making multiple
@@ -11,7 +14,7 @@ import java.io.File;
  * 
  * @author Derek S. Prijatelj
  */
-protected class docPartioner{
+public class docPartition{
     
     /**
      * Strict partition of documents. Every partition has exactly the words
@@ -56,19 +59,20 @@ protected class docPartioner{
                     + "directory containing the plain text documents to be "
                     + "partitioned."
                     );
-                dir = null;
+            } else {
+                return dir;
             }
-            
-            return dir;
-        } catch (IOException | NotADirectory e) {
+        } catch (NotADirectory e) {
             e.printStackTrace();
+            return null;
         }
     }
 
     /**
      * Partitions the documents in the provided relative file path based on the
      * indicated word count per partiton and stores the resulting partitions
-     * into the desired relative file export path.
+     * into the desired relative file export path. Assumes all separate files to
+     * be partitioned are in their own directories by author.
      * 
      * @param wordCount number of words to be in each partition
      * @param dirOfDocs path to directory of documents to be partitioned
@@ -81,17 +85,34 @@ protected class docPartioner{
     private static void partition(int wordCount, String dirOfDocs,
             String exportPath, boolean strict){
         File dir = accessDir(dirOfDocs);
+        int parts;
+        String fileName, fName;
+        HashMap<String, Integer> numOfParts = new HashMap<>();
+        File load = null;
 
         // loop through all files in dir, and execute partitionFile() if .txt
         for (final File file : dir.listFiles()){
-            if (!file.isFile() || !file.getName().endsWith(".txt")){
-                continue;
+            fileName = file.getName();
+
+            if (fileName.equals("load.csv")){
+                load = new File(file.getPath());
+            } else if (file.isDirectory()){
+                for (final File f: file.listFiles()){
+                    fName = f.getName();
+                    
+                    if (!f.isFile() || !fName.endsWith(".txt")){
+                        continue;
+                    } else {
+                        parts = partitionFile(wordCount, f, exportPath, strict);
+                        numOfParts.put(fName, parts);
+                    }
+                }
             }
-            partitionFile(wordCount, file, exportPath, strict);
         }
+
+        createLoadCSV(load, numOfParts);
     }
 
-    // save sub-docs in export dir w/ corresponding sub-dir and naming
     /**
      * partitions the given plain text file into multipl plain text files with
      * at maximum as many words in the file as specified
@@ -101,10 +122,11 @@ protected class docPartioner{
      * @param exportPath relative path to export the partitioned files
      * @param strict if strict, only files with exactly the specified amount of
      * words will be created.
+     *
+     * @return returns the number of partitions from file
      */
-    private static void partitionFile(int wordCount, File file,
+    private static int partitionFile(int wordCount, File file,
             String exportPath, boolean strict){
-        Scanner sc = new Scanner(file);
 
         File subDir = createSubDir(file, exportPath);
         int numWords = 0, subDocNum = 1;
@@ -113,11 +135,12 @@ protected class docPartioner{
         char c;
 
         try {
+            FileReader input = new FileReader(file);
+            BufferedReader buffRead = new BufferedReader(input);
             PrintWriter writer = new PrintWriter(subDoc, "UTF-8");
 
-            while(sc.hasNext()){
-                c = sc.nextChar(); // TODO read char by char, Scanner does not do this. Buffered Reader pls.
-                writer.write(c);
+            while((c = (char)buffRead.read()) != -1){
+                writer.write((char)c);
 
                 if (isAlphaNum(c) && !makingWord){
                     makingWord = true;
@@ -137,14 +160,18 @@ protected class docPartioner{
             }
             
             writer.close();
+            buffRead.close();
+            input.close();
 
             if (numWords != 0 && strict){
                 subDoc.delete();
+                subDocNum--;
             } 
         } catch (IOException e){
             e.printStackTrace();
         }
-        sc.close();
+
+        return subDocNum;
     }
 
     // What about hyphenated words? and other special cases?
@@ -173,12 +200,81 @@ protected class docPartioner{
 
         return subDir;
     }
+
+    /**
+     * Creates newLoad.csv file for JGAAP to use for accessing all files in
+     * appropriate directories. May be only our situation specific, and not
+     * general due to how it parses the orignal load.csv
+     *
+     * @param load file object of original load.csv
+     * @param map of partitioned parent file with its number of partitions
+     */
+    private static void createLoadCSV(File load,
+            HashMap<String, Integer> numOfParts){
+        if (load == null){
+            // ignore or create load.csv from scratch
+            return;
+        } 
+
+        String name = load.getPath();
+        File tmp = new File(
+            name.substring(0, name.lastIndexOf("\\")+1) + "newLoad.csv"
+            );
+
+        try{
+            FileReader in = new FileReader(load);
+            BufferedReader bfr = new BufferedReader(in);
+
+            PrintWriter out = new PrintWriter(tmp, "UTF-8");
+            String line, path;
+            String[] str;
+            Integer parts;
+
+            while((line = bfr.readLine()) != null){
+                str = line.split(",");
+                
+                parts = numOfParts.get(str[1]);
+                
+                if (parts != null){
+                    path = str[1].substring(0, str[1].length()-4);
+                    
+                    for (int i = 1; i < parts+1; i++){
+                        str[1] = path + "\\" + path + "_" + i + ".txt";
+                        
+                        out.print(str[0] + "," + str[1] + "," + str[2]);
+
+                        if (str[2].equals("")){
+                            out.println(",");
+                        } else {
+                            out.println("");
+                        }
+                    }
+                } else {
+                    out.println(line);
+                }
+            }
+
+            out.close();
+            bfr.close();
+            in.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     
     /**
      * Command Line Interface
      */
     protected static void cli(String[] args){
-    
+        if (args.length == 4){
+            if (args[0].equals("strict"))
+                strict(Integer.parseInt(args[1]), args[2], args[3]);
+            else
+                lenient(Integer.parseInt(args[1]), args[2], args[3]);
+        } else {
+            System.out.println("Help: [partition_type] [number of words per partition] [directory of docs] [export directory]");
+        }
+
     }
 
     public static void main(String[] args){
