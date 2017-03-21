@@ -97,8 +97,11 @@ public class docPartition{
             if (fileName.equals("load.csv")){
                 load = new File(file.getPath());
             } else if (file.isDirectory()){
+                System.out.println("Working in dir: " + file.getName());
                 for (final File f: file.listFiles()){
                     fName = f.getName();
+
+                    System.out.println("  on file: " + fName);
                     
                     if (!f.isFile() || !fName.endsWith(".txt")){
                         continue;
@@ -109,8 +112,10 @@ public class docPartition{
                 }
             }
         }
-
+        
+        System.out.println("Now createLoadCSV() . . .");
         createLoadCSV(load, numOfParts);
+        System.out.println("newLoad.csv created!");
     }
 
     /**
@@ -132,6 +137,7 @@ public class docPartition{
         int numWords = 0, subDocNum = 1;
         File subDoc = new File(subDir.getPath() + "_" + subDocNum + ".txt");
         boolean makingWord = false;
+        int cint;
         char c;
 
         try {
@@ -139,8 +145,10 @@ public class docPartition{
             BufferedReader buffRead = new BufferedReader(input);
             PrintWriter writer = new PrintWriter(subDoc, "UTF-8");
 
-            while((c = (char)buffRead.read()) != -1){
-                writer.write((char)c);
+            while((cint = buffRead.read()) != -1){
+                c = (char)cint;
+                writer.write(c);
+
 
                 if (isAlphaNum(c) && !makingWord){
                     makingWord = true;
@@ -171,6 +179,8 @@ public class docPartition{
             e.printStackTrace();
         }
 
+        System.out.println("    File partitioned into " + subDocNum + " parts");
+
         return subDocNum;
     }
 
@@ -188,14 +198,14 @@ public class docPartition{
         File export = new File(exportPath);
 
         if (!export.isDirectory()){
-            export.mkdir();
+            export.mkdirs();
         }
         
         String name = file.getName();
         File subDir = new File(export, name.substring(0, name.length()-4));
 
         if (!subDir.isDirectory()){
-            file.mkdir();
+            file.mkdirs();
         }
 
         return subDir;
