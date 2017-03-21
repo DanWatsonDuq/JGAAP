@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -98,23 +99,31 @@ public class docPartition{
                 load = new File(file.getPath());
             } else if (file.isDirectory()){
                 System.out.println("Working in dir: " + file.getName());
+
+                // make dir for author
+
                 for (final File f: file.listFiles()){
                     fName = f.getName();
 
-                    System.out.println("  on file: " + fName);
+                    System.out.println("file: " + fName);
                     
                     if (!f.isFile() || !fName.endsWith(".txt")){
                         continue;
                     } else {
-                        parts = partitionFile(wordCount, f, exportPath, strict);
-                        numOfParts.put(fName, parts);
+                        
+                        // make dir for file
+                        
+                        parts = partitionFile(wordCount, f,
+                            exportPath + "/"+ file.getName() + "/" + f.getName(),
+                            strict);
+                        numOfParts.put(f.getName(), parts);
                     }
                 }
             }
         }
         
         System.out.println("Now createLoadCSV() . . .");
-        createLoadCSV(load, numOfParts);
+        createLoadCSV(load, numOfParts, exportPath);
         System.out.println("newLoad.csv created!");
     }
 
@@ -220,7 +229,7 @@ public class docPartition{
      * @param map of partitioned parent file with its number of partitions
      */
     private static void createLoadCSV(File load,
-            HashMap<String, Integer> numOfParts){
+            HashMap<String, Integer> numOfParts, String exportPath){
         if (load == null){
             // ignore or create load.csv from scratch
             return;
@@ -228,7 +237,8 @@ public class docPartition{
 
         String name = load.getPath();
         File tmp = new File(
-            name.substring(0, name.lastIndexOf("\\")+1) + "newLoad.csv"
+            //name.substring(0, name.lastIndexOf("\\")+1) + "newLoad.csv"
+            exportPath + "/" + "newLoad.csv"
             );
 
         try{
@@ -243,21 +253,35 @@ public class docPartition{
             while((line = bfr.readLine()) != null){
                 str = line.split(",");
                 
-                parts = numOfParts.get(str[1]);
+                parts = null;
+
+                for (Map.Entry<String, Integer> entry : numOfParts.entrySet()){
+                    if (str[1].contains(entry.getKey())) {
+                        parts = entry.getValue();
+                        break;
+                    }
+                }
+
+                //parts = numOfParts.get(str[1]);
                 
                 if (parts != null){
                     path = str[1].substring(0, str[1].length()-4);
                     
                     for (int i = 1; i < parts+1; i++){
                         str[1] = path + "\\" + path + "_" + i + ".txt";
-                        
-                        out.print(str[0] + "," + str[1] + "," + str[2]);
-
+                       
+                        if (str.length == 3){
+                            out.println(str[0] + "," + str[1] + "," + str[2]);
+                        } else {
+                            out.println(str[0] + "," + str[1] + ",");
+                        }
+                        /*
                         if (str[2].equals("")){
                             out.println(",");
                         } else {
                             out.println("");
                         }
+                        */
                     }
                 } else {
                     out.println(line);
@@ -281,6 +305,8 @@ public class docPartition{
                 strict(Integer.parseInt(args[1]), args[2], args[3]);
             else
                 lenient(Integer.parseInt(args[1]), args[2], args[3]);
+        } else if (args.length == 3){
+            strict(Integer.parseInt(args[0]), args[1], args[2]);
         } else {
             System.out.println("Help: [partition_type] [number of words per partition] [directory of docs] [export directory]");
         }
