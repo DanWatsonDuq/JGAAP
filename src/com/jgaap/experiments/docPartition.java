@@ -125,6 +125,9 @@ public class docPartition{
                         parts = partitionFile(wordCount, f,
                             exportPath + "/"+ file.getName() + "/" + f.getName(),
                             strict, maxParts);
+
+        System.out.println("\n\n"+f.getName()+"\n\n");
+
                         numOfParts.put(f.getName(), parts);
                     }
                 }
@@ -161,9 +164,12 @@ public class docPartition{
         try {
             FileReader input = new FileReader(file);
             BufferedReader buffRead = new BufferedReader(input);
+
+    System.out.println("subDoc = "+subDoc.getPath());
+
             PrintWriter writer = new PrintWriter(subDoc, "UTF-8");
 
-            while((cint = buffRead.read()) != -1 && subDocNum < maxParts){
+            while((cint = buffRead.read()) != -1 && subDocNum < maxParts+1){
                 c = (char)cint;
                 writer.write(c);
 
@@ -177,10 +183,13 @@ public class docPartition{
 
                 if (numWords >= wordCount){
                     writer.close();
+                    
                     subDocNum++;
-                    subDoc = new File(subDir.getPath() + "_" + subDocNum
-                        + ".txt");
-                    writer = new PrintWriter(subDoc, "UTF-8");
+                    if (subDocNum < maxParts+1){
+                        subDoc = new File(subDir.getPath() + "_" + subDocNum
+                            + ".txt");
+                        writer = new PrintWriter(subDoc, "UTF-8");
+                    }
                     numWords = 0;
                 }
             }
@@ -190,6 +199,9 @@ public class docPartition{
             input.close();
 
             if (numWords != 0 && strict){
+
+            System.out.println("\n     delete subDoc "+ subDoc.getName()+"\n");
+
                 subDoc.delete();
                 subDocNum--;
             } 
@@ -255,6 +267,8 @@ public class docPartition{
             exportPath + "/" + "newLoad.csv"
             );
 
+    System.out.println("\n\nexportPath = "+exportPath+"\n\n");
+
         try{
             FileReader in = new FileReader(load);
             BufferedReader bfr = new BufferedReader(in);
@@ -279,9 +293,14 @@ public class docPartition{
                 //parts = numOfParts.get(str[1]);
                 
                 if (parts != null){
-                    path = str[1].substring(0, str[1].length()-4);
+                    path = exportPath.replaceAll("/", "\\")+ "\\" + str[1].substring(12, str[1].length()-4);
                     filePart = path.substring(path.lastIndexOf("\\")+1);
                     
+
+        System.out.println("\n\n"+ path);
+        System.out.println(filePart +"\n\n");
+
+
                     for (int i = 1; i < parts+1; i++){
                         str[1] = path + "\\" + filePart + "_" + i + ".txt";
                        
