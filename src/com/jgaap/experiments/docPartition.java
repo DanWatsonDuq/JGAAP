@@ -17,6 +17,15 @@ import java.util.Map;
  */
 public class docPartition{
     
+
+    protected static void multiPartition(int[] wordCount, String dir,
+        String export, int maxParts){
+        for (int i = 0; i < wordCount.length; i++){
+            strict(wordCount[i], dir, export + "/wordCount" + wordCount[i],
+                maxParts);
+        }
+    }
+
     /**
      * Strict partition of documents. Every partition has exactly the words
      * specified, otherwise is discarded from partition set.
@@ -26,8 +35,8 @@ public class docPartition{
      * @param exportPath relative path to export documents
      */
     protected static void strict(int wordCount, String dirOfDocs,
-            String exportPath){
-        partition(wordCount, dirOfDocs, exportPath, true);
+            String exportPath, int maxParts){
+        partition(wordCount, dirOfDocs, exportPath, true, maxParts);
     }
 
     /**
@@ -39,8 +48,8 @@ public class docPartition{
      * @param exportPath relative path to export documents
      */
     protected static void lenient(int wordCount, String dirOfDocs,
-            String exportPath){
-        partition(wordCount, dirOfDocs, exportPath, false);
+            String exportPath, int maxParts){
+        partition(wordCount, dirOfDocs, exportPath, false, maxParts);
     }
 
     /**
@@ -84,7 +93,7 @@ public class docPartition{
      * partition has less words than indicated it will still be saved.
      */
     private static void partition(int wordCount, String dirOfDocs,
-            String exportPath, boolean strict){
+            String exportPath, boolean strict, int maxParts){
         File dir = accessDir(dirOfDocs);
         int parts;
         String fileName, fName;
@@ -115,7 +124,7 @@ public class docPartition{
                         
                         parts = partitionFile(wordCount, f,
                             exportPath + "/"+ file.getName() + "/" + f.getName(),
-                            strict);
+                            strict, maxParts);
                         numOfParts.put(f.getName(), parts);
                     }
                 }
@@ -140,7 +149,7 @@ public class docPartition{
      * @return returns the number of partitions from file
      */
     private static int partitionFile(int wordCount, File file,
-            String exportPath, boolean strict){
+            String exportPath, boolean strict, int maxParts){
 
         File subDir = createSubDir(file, exportPath);
         int numWords = 0, subDocNum = 1;
@@ -154,7 +163,7 @@ public class docPartition{
             BufferedReader buffRead = new BufferedReader(input);
             PrintWriter writer = new PrintWriter(subDoc, "UTF-8");
 
-            while((cint = buffRead.read()) != -1){
+            while((cint = buffRead.read()) != -1 && subDocNum < maxParts){
                 c = (char)cint;
                 writer.write(c);
 
@@ -299,6 +308,7 @@ public class docPartition{
     /**
      * Command Line Interface
      */
+    /* TODO fix so it allows array of ints and specified maxParts
     protected static void cli(String[] args){
         if (args.length == 4){
             if (args[0].equals("strict"))
@@ -312,8 +322,16 @@ public class docPartition{
         }
 
     }
+    */
 
     public static void main(String[] args){
-       cli(args); 
+        //cli(args); 
+
+        int wordCount[] = {10000, 5000, 2500, 1000, 500, 250, 100};
+       
+        // arg[0]: dir to partition, arg[1] export dir, args[2] maxPartition docs
+        if (args.length == 3)
+            multiPartition(wordCount, args[0], args[1], Integer.parseInt(args[2]));
+        // note it uses strict partition inherently
     }
 }
