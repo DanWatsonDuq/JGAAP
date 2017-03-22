@@ -328,6 +328,10 @@ public class docPartition{
         //cli(args); 
 
         int wordCount[] = {10000, 5000, 2500, 1000, 500, 250, 100};
+
+        // javac com/jgaap/experiments/docPartition.java com/jgaap/experiments/NotADirectory.java 
+
+        // java com/jgaap/experiments/docPartition ../Texts/SciFi/ Texts/SciFi 1
        
         // arg[0]: dir to partition, arg[1] export dir, args[2] maxPartition docs
         if (args.length == 3)
