@@ -255,7 +255,7 @@ public class docPartition{
             BufferedReader bfr = new BufferedReader(in);
 
             PrintWriter out = new PrintWriter(tmp, "UTF-8");
-            String line, path;
+            String line, path, filePart;
             String[] str;
             Integer parts;
 
@@ -275,9 +275,10 @@ public class docPartition{
                 
                 if (parts != null){
                     path = str[1].substring(0, str[1].length()-4);
+                    filePart = path.substring(path.lastIndexOf("\\")+1);
                     
                     for (int i = 1; i < parts+1; i++){
-                        str[1] = path + "\\" + path + "_" + i + ".txt";
+                        str[1] = path + "\\" + filePart + "_" + i + ".txt";
                        
                         if (str.length == 3){
                             out.println(str[0] + "," + str[1] + "," + str[2]);
