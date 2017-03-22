@@ -213,7 +213,7 @@ public class docPartition{
      * already exist.
      */
     private static File createSubDir(File file, String exportPath){
-        File export = new File(exportPath);
+        File export = new File(exportPath.substring(0, exportPath.length()-4));
 
         if (!export.isDirectory()){
             export.mkdirs();
@@ -222,9 +222,14 @@ public class docPartition{
         String name = file.getName();
         File subDir = new File(export, name.substring(0, name.length()-4));
 
+        /* unneccesary and useless (error otherwise)
         if (!subDir.isDirectory()){
-            file.mkdirs();
+            subDir.mkdirs();
         }
+        */
+
+        //System.out.println("\n\n"+subDir.getPath());
+        //System.out.println(export.getPath()+"\n\n");
 
         return subDir;
     }
