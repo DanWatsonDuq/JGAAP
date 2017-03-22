@@ -193,8 +193,6 @@ public class docPartition{
                         subDoc = new File(subDir.getPath() + "_" + subDocNum
                             + ".txt");
                         writer = new PrintWriter(subDoc, "UTF-8");
-                        subDocNum--;
-                        break;
                     }
                     numWords = 0;
                 }
@@ -217,7 +215,11 @@ public class docPartition{
 
         System.out.println("    File partitioned into " + subDocNum + " parts");
 
-        return subDocNum;
+        if (subDocNum < maxParts){
+            return subDocNum;
+        } else {
+            return subDocNum-1;
+        }
     }
 
     // What about hyphenated words? and other special cases?
