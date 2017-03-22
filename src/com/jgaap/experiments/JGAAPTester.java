@@ -1,4 +1,5 @@
 package com.jgaap.experiments;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,12 +20,18 @@ import com.jgaap.classifiers.CentroidDriver;
 import com.jgaap.classifiers.WEKASMO;
 import com.jgaap.distances.CosineDistance;
 import com.jgaap.distances.IntersectionDistance;
+import com.jgaap.distances.KendallCorrelationDistance;
 import com.jgaap.distances.ManhattanDistance;
 import com.jgaap.eventDrivers.CharacterEventDriver;
 import com.jgaap.eventDrivers.CharacterNGramEventDriver;
 import com.jgaap.eventDrivers.DefinitionsEventDriver;
+import com.jgaap.eventDrivers.MNLetterWordEventDriver;
 import com.jgaap.eventDrivers.NaiveWordEventDriver;
+import com.jgaap.eventDrivers.POSBiGramEventDriverTest;
+import com.jgaap.eventDrivers.POSNGramEventDriver;
+import com.jgaap.eventDrivers.PartOfSpeechEventDriver;
 import com.jgaap.eventDrivers.RareWordsEventDriver;
+import com.jgaap.eventDrivers.VowelInitialWordEventDriver;
 import com.jgaap.generics.AnalysisDriver;
 import com.jgaap.generics.DistanceFunction;
 import com.jgaap.generics.EventCuller;
@@ -35,8 +42,8 @@ import com.jgaap.util.Document;
 public class JGAAPTester {
 	static API jgaap = API.getInstance();
 	static String userdirectory = System.getProperty("user.dir");
-	static String expTarget = userdirectory + "/logs3/";
-	static String logTarget = userdirectory + "/logs3/";
+	static String expTarget = userdirectory + "/logs4/";
+	static String logTarget = userdirectory + "/logs4/";
 	static PrintStream sys = System.out;
 	static PrintStream exp;
 
@@ -47,7 +54,7 @@ public class JGAAPTester {
 	public static void main(String[] args) throws Exception {
 		sys.println(userdirectory);
 		sys.println("Working");
-		//correlationExperiment();
+		// correlationExperiment();
 		// createExperimentCSV(new
 		// File("H:/Java/workspace/JGAAPMods/Texts/Mysteries"), .2);
 		// createExperimentCSV(new
@@ -56,43 +63,94 @@ public class JGAAPTester {
 		// BasicConfigurator.configure();
 		//
 		// // loadAAACProblem("A");
-		// exp = new PrintStream((new File(expTarget + "exp.csv")));
+		exp = new PrintStream((new File(expTarget + "exp.csv")));
 		// exp.println("Experiments");
-		// sanFranciscoMethods();
-		// exp.close();
-		// ExperimentEngine.runExperiment(expTarget + "expNGrams.csv", "English"); //
+		//sanFranciscoMethods();
+		exp.close();
+		// ExperimentEngine.runExperiment(expTarget + "expNGrams.csv",
+		// "English"); //
 		// log
 		// // file
 		// // generation
-//		 @SuppressWarnings("unchecked")
-//		 List<File> allFiles = new ArrayList<File>();
-//		 File dir = new File("tmp");
-//		 getFilesRecursive(dir, allFiles);
-//		 System.out.println(allFiles);
-//		 for (File f : allFiles)
-//			 Files.move(f, new File(logTarget + f.getName()));
-		 MultiLog ml = new MultiLog(logTarget,"scifi",false);
-		 System.out.println("data Processed");
-		 Covariance.process(ml,true);
-		 System.out.println("Cov processed");
-		 double [][] results = Correlation.process(ml);
-		 double[] pVector = Correlation.pVector(ml);
-		 
+		// @SuppressWarnings("unchecked")
+		// List<File> allFiles = new ArrayList<File>();
+		// File dir = new File("tmp");
+		// getFilesRecursive(dir, allFiles);
+		// System.out.println(allFiles);
+		// for (File f : allFiles)
+		// Files.move(f, new File(logTarget + f.getName()));
+		//MultiLog ml = new MultiLog(logTarget, "scifi", false);
+		System.out.println("data Processed");
+		//Covariance.process(ml, true);
+		System.out.println("Cov processed");
+		//double[][] results = Correlation.process(ml);
+		//double[] pVector = Correlation.pVector(ml);
+
+		exp = new PrintStream((new File(expTarget + "exp.csv")));
+		
+		
+		
+		//multiLengthExperiments()
+		exp.close();
+		
+	}
+
+	private static void multiLengthExperiments(File loadDotCSV) {
+
+		ArrayList<EventDriver> eds = new ArrayList<EventDriver>();
+		eds.add(new NaiveWordEventDriver());
+		eds.add(new PartOfSpeechEventDriver());
+		eds.add(new CharacterEventDriver());
+		eds.add(new VowelInitialWordEventDriver());
+
+		EventDriver ed = new POSNGramEventDriver();
+		ed.setParameter("N", 2);
+
+		eds.add(ed);
+
+		ed = new MNLetterWordEventDriver();
+		ed.setParameter("M", 3);
+		ed.setParameter("N", 4);
+
+		eds.add(ed);
+
+		List<DistanceFunction> dfs = new ArrayList<DistanceFunction>();
+		dfs.add(new IntersectionDistance());
+		dfs.add(new CosineDistance());
+		dfs.add(new KendallCorrelationDistance());
+
+		String canon = ",Normalize Whitespace" + '&' + "Unify Case,";
+
+		AnalysisDriver ad = new CentroidDriver();
+
+		for (DistanceFunction df : dfs)
+			for (EventDriver evd : eds) {
+				String eventString = evd.displayName();
+				if (evd instanceof POSNGramEventDriver)
+					eventString += "|N:" + evd.getParameter("N");
+				if (evd instanceof MNLetterWordEventDriver)
+					eventString += "|N:" + evd.getParameter("N") + "|M:" + evd.getParameter("M");
+
+				exp.println(canon + eventString + "," + ad.displayName() + ","
+						+ df.displayName() + "," + loadDotCSV.getPath());
+			}
+
 	}
 
 	private static void correlationExperiment() throws IOException {
-		
-		//BasicConfigurator.configure();
-		//ExperimentEngine.runExperiment("H:/Java/workspace/JGAAPMods/logs3/exp.csv", "English"); // log
-																			// file
-																			// generation
-//		@SuppressWarnings("unchecked")
-//		List<File> allFiles = new ArrayList<File>();
-//		File dir = new File("H:/Java/workspace/JGAAPMods/tmp");
-//		getFilesRecursive(dir, allFiles);
-//		System.out.println(allFiles);
-//		for (File f : allFiles)
-//			Files.move(f, new File(logTarget + f.getName()));
+
+		// BasicConfigurator.configure();
+		// ExperimentEngine.runExperiment(expTarget+"/exp.csv", "English"); //
+		// log
+		// file
+		// generation
+		// @SuppressWarnings("unchecked")
+		// List<File> allFiles = new ArrayList<File>();
+		// File dir = new File("H:/Java/workspace/JGAAPMods/tmp");
+		// getFilesRecursive(dir, allFiles);
+		// System.out.println(allFiles);
+		// for (File f : allFiles)
+		// Files.move(f, new File(logTarget + f.getName()));
 		MultiLog ml = new MultiLog(logTarget, "scifi", false);
 		double[][] results = Covariance.process(ml);
 
@@ -120,20 +178,19 @@ public class JGAAPTester {
 		AnalysisDriver cd = new CentroidDriver();
 		AnalysisDriver smo = new WEKASMO();
 		for (EventDriver ed : eds) {
-				for (DistanceFunction df : dfs) {
-						String eventString = ed.displayName()+(ed instanceof CharacterNGramEventDriver ? "|N:"+ed.getParameter("N"):"");
-						exp.println(",Normalize Whitespace" + '&' + "Unify Case," + eventString +"," + cd.displayName() + "," + df.displayName() + ","
-							+ "H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv");
-				}
+			for (DistanceFunction df : dfs) {
+				String eventString = ed.displayName()
+						+ (ed instanceof CharacterNGramEventDriver ? "|N:" + ed.getParameter("N") : "");
+				exp.println(",Normalize Whitespace" + '&' + "Unify Case," + eventString + "," + cd.displayName() + ","
+						+ df.displayName() + "," + "H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv");
+			}
 		}
 
 		for (EventDriver ed : eds) {
-			String eventString = ed.displayName()+(ed instanceof CharacterNGramEventDriver ? "|N:"+ed.getParameter("N"):"");
-			exp.println(
-			",Normalize Whitespace & Unify Case," +
-		    ed.displayName() +
-		    eventString+ 
-		    "," + smo.displayName() + ",," + "H:/Java/workspace/JGAAPMods/Texts/SciFi/load.csv");
+			String eventString = ed.displayName()
+					+ (ed instanceof CharacterNGramEventDriver ? "|N:" + ed.getParameter("N") : "");
+			exp.println(",Normalize Whitespace & Unify Case," + ed.displayName() + eventString + "," + smo.displayName()
+					+ ",," + "H:/Java/workspace/JGAAPMods/Texts/SciFi/load.csv");
 		}
 
 	}
@@ -176,14 +233,16 @@ public class JGAAPTester {
 		List<AnalysisDriver> ads = AnalysisDrivers.getAnalysisDrivers();// .subList(0,load);
 		List<DistanceFunction> dfs = DistanceFunctions.getDistanceFunctions();// .subList(0,load);
 		List<EventCuller> ecs = EventCullers.getEventCullers();// .subList(0,load);
-		int i=0;
+		int i = 0;
 		for (AnalysisDriver ad : ads) {
 			if (ad instanceof NeighborAnalysisDriver)
 				for (DistanceFunction df : dfs) {
 					for (EventDriver ed : eds) {
 						for (EventCuller ec : ecs) {
 							try {
-								exp.println("exp # " + (i++) + "-, " + "Normalize Whitespace&Unify Case," + ed.displayName() + "#" + ec.displayName() + "," + ad.displayName() + "," + df.displayName() + "," + JGAAPConstants.JGAAP_RESOURCE_PACKAGE
+								exp.println("exp # " + (i++) + "-, " + "Normalize Whitespace&Unify Case,"
+										+ ed.displayName() + "#" + ec.displayName() + "," + ad.displayName() + ","
+										+ df.displayName() + "," + JGAAPConstants.JGAAP_RESOURCE_PACKAGE
 										+ "aaac/problem" + "A" + "/load" + "A" + ".csv");
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -195,8 +254,10 @@ public class JGAAPTester {
 				for (EventDriver ed : eds) {
 					for (EventCuller ec : EventCullers.getEventCullers()) {
 						try {
-							exp.println("exp # " + (i++) + "-, " + "Normalize Whitespace&Unify Case," + ed.displayName() + "#" + ec.displayName() + "," + ad.displayName() + "," + JGAAPConstants.JGAAP_RESOURCE_PACKAGE + "aaac/problem" + "A" + "/load"
-									+ "A" + ".csv");
+							exp.println("exp # " + (i++) + "-, " + "Normalize Whitespace&Unify Case," + ed.displayName()
+									+ "#" + ec.displayName() + "," + ad.displayName() + ","
+									+ JGAAPConstants.JGAAP_RESOURCE_PACKAGE + "aaac/problem" + "A" + "/load" + "A"
+									+ ".csv");
 							// go();
 						} catch (Exception e) {
 							e.printStackTrace();
