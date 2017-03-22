@@ -95,9 +95,10 @@ public class docPartition{
     private static void partition(int wordCount, String dirOfDocs,
             String exportPath, boolean strict, int maxParts){
         File dir = accessDir(dirOfDocs);
-        int parts;
-        String fileName, fName;
+        int parts, locAuthor;
+        String fileName, fName, author;
         HashMap<String, Integer> numOfParts = new HashMap<>();
+        HashMap<String, String> fileAuthor = new HashMap<>(); // TODO patch is ugly, restructure entire code to allow recursion and simplify this.
         File load = null;
 
         // loop through all files in dir, and execute partitionFile() if .txt
@@ -126,16 +127,19 @@ public class docPartition{
                             exportPath + "/"+ file.getName() + "/" + f.getName(),
                             strict, maxParts);
 
-        System.out.println("\n\n"+f.getName()+"\n\n");
+        System.out.println("\n\n   *%*%*%*   "+f.getPath()+"\n\n");
 
                         numOfParts.put(f.getName(), parts);
+                        locAuthor = f.getPath().lastIndexOf("Author");
+                        author = f.getPath().substring(locAuthor, locAuthor+7);
+                        fileAuthor.put(f.getName(), author);
                     }
                 }
             }
         }
         
         System.out.println("Now createLoadCSV() . . .");
-        createLoadCSV(load, numOfParts, exportPath);
+        createLoadCSV(load, numOfParts, exportPath, fileAuthor);
         System.out.println("newLoad.csv created!");
     }
 
@@ -189,6 +193,8 @@ public class docPartition{
                         subDoc = new File(subDir.getPath() + "_" + subDocNum
                             + ".txt");
                         writer = new PrintWriter(subDoc, "UTF-8");
+                        subDocNum--;
+                        break;
                     }
                     numWords = 0;
                 }
@@ -255,9 +261,10 @@ public class docPartition{
      * @param map of partitioned parent file with its number of partitions
      */
     private static void createLoadCSV(File load,
-            HashMap<String, Integer> numOfParts, String exportPath){
+            HashMap<String, Integer> numOfParts, String exportPath,
+            HashMap<String, String> fileAuthor){
         if (load == null){
-            // ignore or create load.csv from scratch
+            // create load.csv from scratch
             return;
         } 
 
@@ -293,8 +300,15 @@ public class docPartition{
                 //parts = numOfParts.get(str[1]);
                 
                 if (parts != null){
-                    path = exportPath.replace('/', '\\')+ "\\" + str[1].substring(12, str[1].length()-4);
-                    filePart = path.substring(path.lastIndexOf("\\")+1);
+                    filePart = str[1].substring(str[1].lastIndexOf("\\")+1,
+                        str[1].length()-4);
+                    path = exportPath.replace('/', '\\') + "\\"
+                        + fileAuthor.get(filePart+".txt") + "\\" 
+                        + filePart;
+                        
+                        //str[1].substring(12, str[1].length()-4);
+                    
+                    //filePart = path.substring(path.lastIndexOf("\\")+1);
                     
 
         System.out.println("\n\n"+ path);
@@ -333,34 +347,22 @@ public class docPartition{
     /**
      * Command Line Interface
      */
-    /* TODO fix so it allows array of ints and specified maxParts
     protected static void cli(String[] args){
-        if (args.length == 4){
-            if (args[0].equals("strict"))
-                strict(Integer.parseInt(args[1]), args[2], args[3]);
-            else
-                lenient(Integer.parseInt(args[1]), args[2], args[3]);
-        } else if (args.length == 3){
-            strict(Integer.parseInt(args[0]), args[1], args[2]);
-        } else {
-            System.out.println("Help: [partition_type] [number of words per partition] [directory of docs] [export directory]");
-        }
-
-    }
-    */
-
-    public static void main(String[] args){
-        //cli(args); 
-
         int wordCount[] = {10000, 5000, 2500, 1000, 500, 250, 100};
+
+        if (args.length == 3){
+            multiPartition(wordCount, args[0], args[1],
+                Integer.parseInt(args[2]));
+        }
+    }
+    public static void main(String[] args){
+        cli(args); 
 
         // javac com/jgaap/experiments/docPartition.java com/jgaap/experiments/NotADirectory.java 
 
         // java com/jgaap/experiments/docPartition ../Texts/SciFi/ Texts/SciFi 1
        
         // arg[0]: dir to partition, arg[1] export dir, args[2] maxPartition docs
-        if (args.length == 3)
-            multiPartition(wordCount, args[0], args[1], Integer.parseInt(args[2]));
         // note it uses strict partition inherently
     }
 }
