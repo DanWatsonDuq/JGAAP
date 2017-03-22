@@ -293,7 +293,7 @@ public class docPartition{
                 //parts = numOfParts.get(str[1]);
                 
                 if (parts != null){
-                    path = exportPath.replaceAll("/", "\\")+ "\\" + str[1].substring(12, str[1].length()-4);
+                    path = exportPath.replace('/', '\\')+ "\\" + str[1].substring(12, str[1].length()-4);
                     filePart = path.substring(path.lastIndexOf("\\")+1);
                     
 
