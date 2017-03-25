@@ -1,0 +1,8 @@
+k
+5,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+
+147,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+148,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+
+
+

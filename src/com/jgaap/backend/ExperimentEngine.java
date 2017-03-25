@@ -56,7 +56,7 @@ public class ExperimentEngine {
 
 	static Logger logger = Logger.getLogger(ExperimentEngine.class);
 
-	private static final int workers = 1;
+	private static final int workers = 4;
 	
 	private static String language = "english";
 
@@ -170,7 +170,7 @@ public class ExperimentEngine {
 		}
 	}
 
-	private static class Experiment implements Callable<String> {
+	public static class Experiment implements Callable<String> {
 
 		private String[] canonicizers;
 		private String[] events;
@@ -186,7 +186,7 @@ public class ExperimentEngine {
 			this.analysis = analysis;
 			this.distance = distance;
 			this.documentsPath = documentsPath;
-			this.fileName = fileName;
+			this.fileName = fileName.substring(0, 3)+fileName.substring(3).replace(":", "").replace("|", "");
 		}
 
 		@Override
@@ -249,7 +249,10 @@ public class ExperimentEngine {
 				} else {
 					resultDocuments = experiment.getUnknownDocuments();
 				}
-				Path filePath = FileSystems.getDefault().getPath(fileName.replace("[|:", "="));
+				
+				
+				Path filePath = FileSystems.getDefault().getPath(fileName);
+				Files.createDirectories(filePath.getParent());
 				Writer writer = Files.newBufferedWriter(filePath, Charset.defaultCharset(), StandardOpenOption.CREATE);
 				for (Document resultDocument : resultDocuments) {
 					writer.append(resultDocument.getFormattedResult(analysisDriver));

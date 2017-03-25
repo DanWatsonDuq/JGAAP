@@ -1,0 +1,12 @@
+manh&Char3,Normalize Whitespace&Unify Case,Character NGrams|N:3,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&Char4,Normalize Whitespace&Unify Case,Character NGrams|N:4,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&Char6,Normalize Whitespace&Unify Case,Character NGrams|N:6,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&Char8,Normalize Whitespace&Unify Case,Character NGrams|N:8,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+inter&Char3,Normalize Whitespace&Unify Case,Character NGrams|N:3,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&Char4,Normalize Whitespace&Unify Case,Character NGrams|N:4,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&Char6,Normalize Whitespace&Unify Case,Character NGrams|N:6,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&Char8,Normalize Whitespace&Unify Case,Character NGrams|N:8,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+cosine&char3,Normalize Whitespace&Unify Case,Character NGrams|N:3,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&char4,Normalize Whitespace&Unify Case,Character NGrams|N:4,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&char6,Normalize Whitespace&Unify Case,Character NGrams|N:6,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&char8,Normalize Whitespace&Unify Case,Character NGrams|N:8,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv

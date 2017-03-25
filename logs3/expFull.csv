@@ -1,0 +1,28 @@
+manh&words,Normalize Whitespace&Unify Case,Words,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&char,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&rarewords,Normalize Whitespace&Unify Case,Rare Words,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&Char3,Normalize Whitespace&Unify Case,Character NGrams|N:3,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&Char4,Normalize Whitespace&Unify Case,Character NGrams|N:4,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&Char6,Normalize Whitespace&Unify Case,Character NGrams|N:6,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+manh&Char8,Normalize Whitespace&Unify Case,Character NGrams|N:8,Centroid Driver,Manhattan Distance,Texts/Scifi/load.csv
+inter&words,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&char,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&rarewords,Normalize Whitespace&Unify Case,Rare Words,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&Char3,Normalize Whitespace&Unify Case,Character NGrams|N:3,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&Char4,Normalize Whitespace&Unify Case,Character NGrams|N:4,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&Char6,Normalize Whitespace&Unify Case,Character NGrams|N:6,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+inter&Char8,Normalize Whitespace&Unify Case,Character NGrams|N:8,Centroid Driver,Intersection Distance,Texts/Scifi/load.csv
+cosine&words,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&char,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&rarewords,Normalize Whitespace&Unify Case,Rare Words,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&char3,Normalize Whitespace&Unify Case,Character NGrams|N:3,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&char4,Normalize Whitespace&Unify Case,Character NGrams|N:4,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&char6,Normalize Whitespace&Unify Case,Character NGrams|N:6,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+cosine&char8,Normalize Whitespace&Unify Case,Character NGrams|N:8,Centroid Driver,Cosine Distance,Texts/Scifi/load.csv
+WEKA&Words,Normalize Whitespace&Unify Case,Words,WEKA SMO,,Texts/Scifi/load.csv
+WEKA&char,Normalize Whitespace&Unify Case,Characters,WEKA SMO,,Texts/Scifi/load.csv
+WEKA&rarewords,Normalize Whitespace&Unify Case,Rare Words,WEKA SMO,,Texts/Scifi/load.csv
+WEKA&char3,Normalize Whitespace&Unify Case,Character NGrams|N:3,WEKA SMO,,Texts/Scifi/load.csv
+WEKA&char4,Normalize Whitespace&Unify Case,Character NGrams|N:4,WEKA SMO,,Texts/Scifi/load.csv
+WEKA&char6,Normalize Whitespace&Unify Case,Character NGrams|N:6,WEKA SMO,,Texts/Scifi/load.csv
+WEKA&char8,Normalize Whitespace&Unify Case,Character NGrams|N:8,WEKA SMO,,Texts/SciFi/load.csv

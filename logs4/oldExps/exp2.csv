@@ -1,0 +1,27 @@
+1,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+2,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+3,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+4,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+5,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+6,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+7,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+8,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+9,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+10,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+11,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+12,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+145,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+146,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+147,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+148,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+149,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+150,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+151,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+152,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+153,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+154,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+155,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+156,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+
+
+

@@ -1,0 +1,13 @@
+CovTest,,,,,
+manh&words,Normalize Whitespace&Unify Case,Words,Centroid Driver,Manhattan Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+manh&char,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Manhattan Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+manh&rarewords,Normalize Whitespace&Unify Case,Rare Words,Centroid Driver,Manhattan Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+inter&words,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+inter&char,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+inter&rarewords,Normalize Whitespace&Unify Case,Rare Words,Centroid Driver,Intersection Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+cosine&words,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+cosine&char,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+cosine&rarewords,Normalize Whitespace&Unify Case,Rare Words,Centroid Driver,Cosine Distance,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+WEKA&Words,Normalize Whitespace&Unify Case,Words,WEKA SMO,,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+WEKA&char,Normalize Whitespace&Unify Case,Characters,WEKA SMO,,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv
+WEKA&rarewords,Normalize Whitespace&Unify Case,Rare Words,WEKA SMO,,H:/Java/workspace/JGAAPMods/Texts/Scifi/load.csv

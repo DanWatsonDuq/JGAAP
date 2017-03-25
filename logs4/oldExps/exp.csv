@@ -1,0 +1,192 @@
+1,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+2,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+3,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+4,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+5,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+6,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\load.csv
+7,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+8,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+9,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+10,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+11,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+12,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\load.csv
+13,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount100\newLoad.csv
+14,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount100\newLoad.csv
+15,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount100\newLoad.csv
+16,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount100\newLoad.csv
+17,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount100\newLoad.csv
+18,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount100\newLoad.csv
+19,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount100\newLoad.csv
+20,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount100\newLoad.csv
+21,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount100\newLoad.csv
+22,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount100\newLoad.csv
+23,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount100\newLoad.csv
+24,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount100\newLoad.csv
+25,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+26,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+27,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+28,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+29,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+30,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+31,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+32,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+33,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+34,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+35,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+36,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount1000\newLoad.csv
+37,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+38,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+39,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+40,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+41,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+42,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+43,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+44,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+45,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+46,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+47,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+48,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount10000\newLoad.csv
+49,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount250\newLoad.csv
+50,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount250\newLoad.csv
+51,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount250\newLoad.csv
+52,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount250\newLoad.csv
+53,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount250\newLoad.csv
+54,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount250\newLoad.csv
+55,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount250\newLoad.csv
+56,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount250\newLoad.csv
+57,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount250\newLoad.csv
+58,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount250\newLoad.csv
+59,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount250\newLoad.csv
+60,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount250\newLoad.csv
+61,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+62,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+63,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+64,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+65,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+66,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+67,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+68,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+69,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+70,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+71,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+72,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount2500\newLoad.csv
+73,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount500\newLoad.csv
+74,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount500\newLoad.csv
+75,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount500\newLoad.csv
+76,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount500\newLoad.csv
+77,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount500\newLoad.csv
+78,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount500\newLoad.csv
+79,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount500\newLoad.csv
+80,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount500\newLoad.csv
+81,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount500\newLoad.csv
+82,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount500\newLoad.csv
+83,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount500\newLoad.csv
+84,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount500\newLoad.csv
+85,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+86,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+87,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+88,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+89,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+90,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+91,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+92,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+93,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+94,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+95,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+96,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\Mysteries\wordCount5000\newLoad.csv
+97,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+98,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+99,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+100,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+101,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+102,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\load.csv
+103,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+104,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+105,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+106,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+107,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+108,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\load.csv
+109,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount100\newLoad.csv
+110,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount100\newLoad.csv
+111,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount100\newLoad.csv
+112,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount100\newLoad.csv
+113,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount100\newLoad.csv
+114,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount100\newLoad.csv
+115,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount100\newLoad.csv
+116,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount100\newLoad.csv
+117,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount100\newLoad.csv
+118,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount100\newLoad.csv
+119,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount100\newLoad.csv
+120,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount100\newLoad.csv
+121,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount1000\newLoad.csv
+122,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount1000\newLoad.csv
+123,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount1000\newLoad.csv
+124,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount1000\newLoad.csv
+125,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount1000\newLoad.csv
+126,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount1000\newLoad.csv
+127,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount1000\newLoad.csv
+128,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount1000\newLoad.csv
+129,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount1000\newLoad.csv
+130,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount1000\newLoad.csv
+131,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount1000\newLoad.csv
+132,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount1000\newLoad.csv
+133,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount10000\newLoad.csv
+134,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount10000\newLoad.csv
+135,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount10000\newLoad.csv
+136,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount10000\newLoad.csv
+137,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount10000\newLoad.csv
+138,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount10000\newLoad.csv
+139,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount10000\newLoad.csv
+140,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount10000\newLoad.csv
+141,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount10000\newLoad.csv
+142,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount10000\newLoad.csv
+143,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount10000\newLoad.csv
+144,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount10000\newLoad.csv
+145,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount250\newLoad.csv
+146,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount250\newLoad.csv
+147,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount250\newLoad.csv
+148,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount250\newLoad.csv
+149,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount250\newLoad.csv
+150,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount250\newLoad.csv
+151,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount250\newLoad.csv
+152,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount250\newLoad.csv
+153,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount250\newLoad.csv
+154,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount250\newLoad.csv
+155,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount250\newLoad.csv
+156,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount250\newLoad.csv
+157,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount2500\newLoad.csv
+158,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount2500\newLoad.csv
+159,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount2500\newLoad.csv
+160,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount2500\newLoad.csv
+161,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount2500\newLoad.csv
+162,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount2500\newLoad.csv
+163,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount2500\newLoad.csv
+164,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount2500\newLoad.csv
+165,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount2500\newLoad.csv
+166,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount2500\newLoad.csv
+167,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount2500\newLoad.csv
+168,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount2500\newLoad.csv
+169,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount500\newLoad.csv
+170,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount500\newLoad.csv
+171,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount500\newLoad.csv
+172,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount500\newLoad.csv
+173,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount500\newLoad.csv
+174,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount500\newLoad.csv
+175,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount500\newLoad.csv
+176,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount500\newLoad.csv
+177,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount500\newLoad.csv
+178,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount500\newLoad.csv
+179,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount500\newLoad.csv
+180,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount500\newLoad.csv
+181,Normalize Whitespace&Unify Case,Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount5000\newLoad.csv
+182,Normalize Whitespace&Unify Case,POS,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount5000\newLoad.csv
+183,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount5000\newLoad.csv
+184,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount5000\newLoad.csv
+185,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount5000\newLoad.csv
+186,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Intersection Distance,Texts\SciFi\wordCount5000\newLoad.csv
+187,Normalize Whitespace&Unify Case,Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount5000\newLoad.csv
+188,Normalize Whitespace&Unify Case,POS,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount5000\newLoad.csv
+189,Normalize Whitespace&Unify Case,Characters,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount5000\newLoad.csv
+190,Normalize Whitespace&Unify Case,Vowel-initial Words,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount5000\newLoad.csv
+191,Normalize Whitespace&Unify Case,POS NGrams|N:2,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount5000\newLoad.csv
+192,Normalize Whitespace&Unify Case,M--N letter Words|N:4|M:3,Centroid Driver,Cosine Distance,Texts\SciFi\wordCount5000\newLoad.csv
