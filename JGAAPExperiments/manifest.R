@@ -1,0 +1,13 @@
+rld = function(){
+	library("caTools")
+	library("MASS")
+	source("vote.R")
+	source("takeVotes.R")
+	source("FindOptimalSubset.R")
+	source("OptimalSubset.R")
+	source("convertToNumeric.R")
+	source("evalFunct.R")
+	source("loadData.R")
+	source("testProc.R")
+	source("manifest.R")
+}
