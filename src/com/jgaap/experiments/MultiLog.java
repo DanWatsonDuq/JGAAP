@@ -168,4 +168,10 @@ class MultiLog {
         return s1[1].equals(s2) && logs.get(i).tests.get(t).results.get(0).rank
                 != logs.get(i).tests.get(t).results.get(1).rank;
     }
+
+    public static void main(String args[]){
+        MultiLog ml = new MultiLog("../../jgaap_independence/pairwise_independence/sml/", "testing",true);
+
+        ml.exportCSV();
+    }
 }
