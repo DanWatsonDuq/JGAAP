@@ -14,6 +14,7 @@ package com.jgaap.experiments;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 class MultiLog {
@@ -36,15 +37,12 @@ class MultiLog {
 	 * log a different method, or from a directory of directories of log files,
 	 * where each directoy signifies a new method.
 	 *
-	 * @param pathToDir
-	 *            String representation of file path to Multi Log Dir
-	 * @param name
-	 *            String name of MultiLog, default name of Multi Log Dir
-	 * @param byDir
-	 *            Boolean switch: True: Method change by directories
-	 *
-	 *            TODO May want to edit LogData to have a constructor that
-	 *            accepts File
+	 * @param pathToDir String representation of file path to Multi Log Dir
+	 * @param name String name of MultiLog, default name = Multi Log Dir
+	 * @param byDir Boolean switch: True: Method change by directories
+     *
+     * TODO May want to edit LogData to have a constructor that
+     * accepts File
 	 */
 	public MultiLog(String pathToDir, String name, boolean byDir) {
 		try {
@@ -112,4 +110,62 @@ class MultiLog {
 			System.out.println();
 		}
 	}
+
+   /**                                                                         
+     * Exports a csv table of MLog's methods individual binary success/failure authorship
+     * attribution for each test document.
+     */
+    public void exportCSV() {
+        try {
+            File csvFile;
+            if (name.isEmpty()){
+                csvFile = new File("UnnamedMultiLog_binVotes.csv");
+            } else {
+                csvFile = new File(name + "_binVotes.csv");
+            }
+            PrintWriter pw = new PrintWriter(csvFile);
+
+            // print header row
+            pw.print(name + ",");
+            for (int i = 0; i < logs.size(); i++) {
+                pw.print(logs.get(i).name);
+                if (i < logs.size() - 1)
+                    pw.print(",");
+            }
+            pw.println();
+
+            // print by row (test docs * results).
+            for (int j = 0; j < logs.get(0).tests.size(); j++) { // rows
+                pw.print(logs.get(0).tests.get(j).questionedDoc + ",");
+                    
+                for (int i = 0; i < logs.size(); i++) {
+                    pw.print(isCorrect(i, j)? '1':'0');
+                    if (i < logs.size() - 1)
+                        pw.print(",");
+                }
+                pw.println();
+            }
+
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isCorrect(int i, int t){
+        String s1[] = logs.get(i).tests.get(t).questionedDoc.trim().split(" ");
+        String s2 = logs.get(i).tests.get(t).results.get(0).author;
+        if (s1.length <= 1) {
+            //if (!defectFiles.contains(ml.logs.get(i).name))
+            //   defectFiles.add(ml.logs.get(i).name);
+            return false;
+        }
+
+        if (s2.contains(" ")) {
+            s2 = (s2.split(" "))[0];
+        }
+
+        return s1[1].equals(s2) && logs.get(i).tests.get(t).results.get(0).rank
+                != logs.get(i).tests.get(t).results.get(1).rank;
+    }
 }

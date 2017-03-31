@@ -117,6 +117,8 @@ public class JGAAPTester {
 		//ExperimentEngine.runExperiment(expTarget+"/exp2.csv", "English");
 		//renameAndMoveFiles("tmp");
 		//getFilesRecursive(new File("logs4"), files);
+        
+        String logTarget = userdirectory + "/research/juloa/JGAAP/Texts";
 		
 		File mys = new File(logTarget+"/Mystery");
 		File sci = new File(logTarget+"/SciFi");
@@ -141,6 +143,9 @@ public class JGAAPTester {
 			pw.println(toWrite);
 			pw.flush();
 			pw.close();
+
+            ml.exportCSV();
+
 			Thread.sleep(10);
 		
 		}
