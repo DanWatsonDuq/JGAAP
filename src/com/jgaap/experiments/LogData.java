@@ -37,6 +37,7 @@ public class LogData {
 	 * only prettier.
 	 */
 	public class TestData {
+		public String author;
 		public String questionedDoc;
 		public ArrayList<String> canonicizers;
 		public ArrayList<EventDriver> eventDrivers;
@@ -46,7 +47,8 @@ public class LogData {
 		public TestData() {
 		}
 
-		public TestData(String docName) {
+		public TestData(String author, String docName) {
+			this.author = author;
 			questionedDoc = docName;
 			canonicizers = new ArrayList<>();
 			eventDrivers = new ArrayList<>();
@@ -74,9 +76,24 @@ public class LogData {
 	public LogData() {
 	}
 
-	public LogData(String logFilePath) throws InvalidLogFileType, InvalidLogStructure, NotADirectory, ResultContainsNaN {
-		this(logFilePath, false);
+	public LogData(String filePath) throws InvalidLogFileType, InvalidLogStructure, NotADirectory, ResultContainsNaN {
+	    name = filePath;
+	    if (filePath.substring(filePath.lastIndexOf('.') ).equals(".txt")){
+	        File log = new File(filePath);
+	        parseBegin(log);
+	    } else {
+	        throw new InvalidLogFileType();
+	    }
 	}
+	
+	public LogData(File file) throws InvalidLogFileType, InvalidLogStructure, NotADirectory, ResultContainsNaN {
+        name = file.getPath();
+        if (file.getPath().substring(file.getPath().lastIndexOf('.') ).equals(".txt")){
+            parseBegin(file);
+        } else {
+            throw new InvalidLogFileType();
+        }
+    }
 
 	/**
 	 * Constructs LogData object either from a single given file, or a given
@@ -89,7 +106,8 @@ public class LogData {
 	 *            True if given path is to a directory, file otherwise
 	 */
 	public LogData(String filePath, boolean isDir) throws InvalidLogFileType, InvalidLogStructure, NotADirectory, ResultContainsNaN {
-		try {
+		//*
+	    try {
 			if (isDir) {
 				File dir = new File(filePath);
 				if (!dir.isDirectory()) {
@@ -113,7 +131,10 @@ public class LogData {
 				}
 			} else {
 				// TODO fix weak file type check
-				if (!(filePath.contains(".") && (filePath.substring(filePath.lastIndexOf('.'))).equals(".txt")))
+				if (!(filePath.contains(".") 
+                    && (filePath.substring(filePath.lastIndexOf('.'))).equals(".txt"))
+                    || !filePath.substring(filePath.lastIndexOf('.')).equals(".DS_Store")
+                    )
 					throw new InvalidLogFileType();
 
 				File logFile = new File(filePath);
@@ -138,6 +159,7 @@ public class LogData {
 			e.printStackTrace();
 			throw e;
 		}
+		//*/
 	}
 
 	/**
@@ -149,14 +171,17 @@ public class LogData {
 	private void parseBegin(File logFile) throws InvalidLogFileType, InvalidLogStructure, ResultContainsNaN {
 		try {
 			Scanner sc = new Scanner(logFile);
-			String line;
+			String line, author, docName;
 
 			// loops through all blank lines until all log tests processed
 			while (sc.hasNextLine()) {
 				line = sc.nextLine();
 				if (!line.isEmpty() && line.length() >= 3 && line.contains(" ")) {
 
-					tests.add(new TestData(line.substring(0, line.lastIndexOf(' '))));
+					author = line.substring(0, line.lastIndexOf(' '));
+					docName = line.substring(line.lastIndexOf(' ')+1);
+
+					tests.add(new TestData(author, docName));
 					line = sc.nextLine();
 
 					if (line.length() >= 12 && (line.substring(0, 12)).equals("Canonicizers") && sc.hasNextLine()) {
@@ -360,6 +385,8 @@ public class LogData {
 	public void print() {
 		System.out.println("\nLog: " + name);
 		for (int i = 0; i < tests.size(); i++) {
+			System.out.println("\nAuthor: " + tests.get(i).author);
+			
 			System.out.println("\nQuestioned Document: " + tests.get(i).questionedDoc);
 
 			System.out.println("Canonicizers:");
@@ -387,5 +414,65 @@ public class LogData {
 				System.out.println((j + 1) + ". " + tests.get(i).results.get(j).author + " " + tests.get(i).results.get(j).value);
 			}
 		}
+	}
+	
+	/**
+	 * Assumes all tests have the same exact linguistic analysis method
+	 * 
+	 * cannonicizers_eventDrivers_analysis
+	 * each item in the three categories will be separated by & if
+	 * multiple items.
+	 * 
+	 * returns string representation of method used
+	 */
+	public String printMethod(){
+		String method = new String();
+		
+		// Canonicizers
+		int size = tests.get(0).canonicizers.size();
+		for (int i = 0; i < size; i++){
+			method += tests.get(0).canonicizers.get(i);
+			if (i < size-1)
+				method += "&";
+		}
+		
+		// EventDrivers and EventCullers
+		size = tests.get(0).eventDrivers.size();
+
+		if (size > 0)
+	        method += "#";
+		
+		int size2;
+		for (int i = 0; i < size; i++){
+		    method += tests.get(0).eventDrivers.get(i).name;
+		    
+		    size2 = tests.get(0).eventDrivers.get(i).eventCullers.size();
+		    if (size2 > 0){
+                method += "*";
+                for (int j = 0; j < size2; j++){
+                    method += tests.get(0).eventDrivers.get(i).eventCullers.get(j);
+                    if (j < size2-1){
+                        method += "*";
+                    }
+                }
+		    }
+		    
+			if (i < size-1)
+				method += "&";
+		}
+
+		// Analysis
+		size = tests.get(0).analysis.size();
+		
+		if (size > 0)
+			method += "#";
+		
+		for (int i = 0; i < size; i++){
+			method += tests.get(0).analysis.get(i);
+			if (i < size-1)
+				method += "&";
+		}
+		
+		return method;
 	}
 }

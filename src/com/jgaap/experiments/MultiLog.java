@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.lang.IndexOutOfBoundsException;
 
 class MultiLog {
 	public String name;
@@ -29,7 +31,28 @@ class MultiLog {
 	}
 
 	public MultiLog(String pathToDir, String name) {
-		this(pathToDir, name, false);
+		//this(pathToDir, name, false);
+	    try{
+	        File mlDir = new File(pathToDir);
+	        if (!mlDir.isDirectory()) {
+	            throw new NotADirectory();
+	        }
+	        if (name.isEmpty()) {
+	            this.name = mlDir.getName();
+	        } else {
+	            this.name = name;
+	        }
+	        
+	        ArrayList <File> files = new ArrayList<>();
+	        getFilesRecursive(mlDir, files);
+	        
+	        for (File file:files){
+	            logs.add(new LogData(file));
+	        }
+        } catch(NotADirectory | InvalidLogFileType | InvalidLogStructure
+                | ResultContainsNaN e){
+            e.printStackTrace();
+        }
 	}
 
 	/**
@@ -125,25 +148,61 @@ class MultiLog {
             }
             PrintWriter pw = new PrintWriter(csvFile);
 
-            // print header row
+            int testsSize = logs.get(0).tests.size(); // #methods
+            int resultsSize = logs.get(0).tests.get(0).results.size(); // #testdocs
+            int methodCount = 0;
+            String logName;
+            HashSet<String> logSuffix = new HashSet<>();
+            logSuffix.add(logs.get(0).tests.get(0).questionedDoc);
+            
+            
+            // print header row (Methods)
             pw.print(name + ",");
             for (int i = 0; i < logs.size(); i++) {
-                pw.print(logs.get(i).name);
+                logName = logs.get(i).tests.get(0).questionedDoc;
+                
+                if (methodCount == 0 && logSuffix.add(logName)){
+                    methodCount = i;
+                    break;
+                }
+                
+                pw.print(logs.get(i).printMethod());
                 if (i < logs.size() - 1)
                     pw.print(",");
             }
             pw.println();
 
-            // print by row (test docs * results).
-            for (int j = 0; j < logs.get(0).tests.size(); j++) { // rows
-                pw.print(logs.get(0).tests.get(j).questionedDoc + ",");
-                    
-                for (int i = 0; i < logs.size(); i++) {
-                    pw.print(isCorrect(i, j)? '1':'0');
-                    if (i < logs.size() - 1)
-                        pw.print(",");
+            // print by row (test docs).
+            //int currentLog = 0; // increment after j > tests.size()
+            
+            System.out.println("logs = " + logs.size());
+            System.out.println("methodCount = " + methodCount);
+            System.out.println("tests = " + testsSize);
+            System.out.println("results = " + resultsSize);
+            
+            for (int currentLog = 0; currentLog < logs.size();
+                    currentLog += methodCount){
+                logName = logs.get(currentLog).name;
+               
+                for (int j = 0; j < testsSize; j++) { // rows
+
+                    try {
+                        pw.print(logs.get(currentLog).tests.get(j).questionedDoc + ",");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Warning: Current dir "
+                                + logName + " has " + logs.get(currentLog).tests.size()
+                                + " files (methods) and is not equal to first dir "
+                                + logs.get(0).name + " which has " + testsSize + "!");
+                        continue;
+                    }
+
+                    for (int i = 0; i < methodCount; i++) {
+                        pw.print(isCorrect(i, j)? '1':'0');
+                        if (i < methodCount - 1)
+                            pw.print(",");
+                    }
+                    pw.println();
                 }
-                pw.println();
             }
 
             pw.close();
@@ -153,7 +212,7 @@ class MultiLog {
     }
 
     private boolean isCorrect(int i, int t){
-        String s1[] = logs.get(i).tests.get(t).questionedDoc.trim().split(" ");
+        String s1[] = logs.get(i).tests.get(t).author.trim().split(" ");
         String s2 = logs.get(i).tests.get(t).results.get(0).author;
         if (s1.length <= 1) {
             //if (!defectFiles.contains(ml.logs.get(i).name))
@@ -168,9 +227,25 @@ class MultiLog {
         return s1[1].equals(s2) && logs.get(i).tests.get(t).results.get(0).rank
                 != logs.get(i).tests.get(t).results.get(1).rank;
     }
+    
+    private static void getFilesRecursive(File pFile, ArrayList<File> list) {
+        //System.out.println(pFile.getName()+pFile.listFiles().length);
+        for (File files : pFile.listFiles()) {
+            if (files.isDirectory()) {
+                getFilesRecursive(files, list);
+            } else if (files.getName().substring(
+                    files.getName().lastIndexOf('.') ).equals(".txt")){
+                list.add(files);
+            }
+        }
+    }
 
     public static void main(String args[]){
-        MultiLog ml = new MultiLog("../../jgaap_independence/pairwise_independence/sml/", "testing",true);
+        MultiLog ml = new MultiLog("../../SciFi", "Sci");
+
+        ml.exportCSV();
+        
+        ml = new MultiLog("../../Mystery", "Mys");
 
         ml.exportCSV();
     }
