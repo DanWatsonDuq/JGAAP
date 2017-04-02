@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
-import java.text.Collator;
 
 public class LogData implements Comparable<LogData>{
 	public class Tuple {
@@ -51,9 +50,9 @@ public class LogData implements Comparable<LogData>{
 		public TestData(String author, String docName) {
 			this.author = author.trim();
 			questionedDoc = docName.trim();
-			canonicizers = new TreeSet<>(Collator.getInstance());
+			canonicizers = new TreeSet<>();
 			eventDrivers = new TreeSet<>();
-			analysis = new TreeSet<>(Collator.getInstance());
+			analysis = new TreeSet<>();
 			results = new ArrayList<>();
 		}
         public int compareTo(TestData o) {
