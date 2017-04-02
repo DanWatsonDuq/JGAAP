@@ -18,6 +18,9 @@ import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import com.jgaap.experiments.LogData.TestData;
+
 import java.lang.IndexOutOfBoundsException;
 import java.text.Collator;
 
@@ -52,7 +55,7 @@ class MultiLog {
 	            logs.add(new LogData(file));
 	        }
 	        
-	        //Collections.sort(logs);
+	        Collections.sort(logs); // causes problems if  not single dir of .txts
         } catch(NotADirectory | InvalidLogFileType | InvalidLogStructure
                 | ResultContainsNaN e){
             e.printStackTrace();
@@ -86,7 +89,7 @@ class MultiLog {
 
             int testsSize = logs.get(0).tests.size(); // #methods
             int resultsSize = logs.get(0).tests.get(0).results.size(); // #testdocs
-            int methodCount = 0;
+            int methodCount = logs.size();
             String logName;
             HashSet<String> logSuffix = new HashSet<>();
             logSuffix.add(logs.get(0).tests.get(0).questionedDoc);
@@ -97,6 +100,7 @@ class MultiLog {
             for (int i = 0; i < logs.size(); i++) {
                 logName = logs.get(i).tests.get(0).questionedDoc;
                 
+                /*
                 if (methodCount == 0 && logSuffix.add(logName)){
                     
                     System.out.println("logSuffix " + logSuffix.toString());
@@ -104,6 +108,7 @@ class MultiLog {
                     methodCount = i;
                     break;
                 }
+                */
                 
                 pw.print(logs.get(i).printMethod());
                 if (i < logs.size() - 1)
@@ -117,12 +122,50 @@ class MultiLog {
             System.out.println("results = " + resultsSize);
             
             String qDoci, qDocCurrent, methodi,methodCurrent;
-            
+            methodCurrent = logs.get(0).printMethod();
+
             // Print by row.
+            int i, j = 0;
+            for (TestData test : logs.get(0).tests){
+                pw.print(test.questionedDoc + ","); // row header
+                
+                qDocCurrent = test.questionedDoc;
+                
+                i = 0;
+                for (LogData method : logs){
+                    
+                    qDoci = logs.get(i).tests.get(j).questionedDoc;
+                    methodi = logs.get(i).printMethod();
+                    
+                    // Error check for reliable data representation in table
+                    if (!qDocCurrent.equals(qDoci)){
+                        System.err.println("Error: questionedDocs do not "
+                                + "match!\n"
+                                + qDocCurrent + " != "
+                                + qDoci
+                                );
+                    }
+                    if (!methodCurrent.equals(methodi)){
+                        System.err.println("Error: methods of docs do not "
+                                + "match!\n"
+                                + methodCurrent + "\n!=\n"
+                                + methodi + "\n"
+                                );
+                    }
+                    
+                    pw.print(isCorrect(method.tests.get(j))? '1':'0');
+                    if (i < methodCount - 1)
+                        pw.print(",");
+                    i++;
+                }
+                pw.println();
+                j++;
+            }
+            
             // TODO Confirm this step size by methodCount is correct
+            /*
             for (int currentLog = 0; currentLog < logs.size();
                     currentLog += methodCount){
-                logName = logs.get(currentLog).name;
                
                 for (int j = 0; j < testsSize; j++) { // rows
                     
@@ -131,7 +174,8 @@ class MultiLog {
                         pw.print(logs.get(currentLog).tests.get(j).questionedDoc + ",");
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Warning: Current dir "
-                                + logName + " has " + logs.get(currentLog).tests.size()
+                                + logs.get(currentLog).name + " has " 
+                                + logs.get(currentLog).tests.size()
                                 + " files (methods) and is not equal to first dir "
                                 + logs.get(0).name + " which has " + testsSize + "!");
                         continue;
@@ -171,6 +215,7 @@ class MultiLog {
                     pw.println();
                 }
             }
+            //*/
 
             pw.close();
         } catch (IOException e) {
@@ -201,6 +246,22 @@ class MultiLog {
         return s1[1].equals(s2) && logs.get(i).tests.get(t).results.get(0).rank
                 != logs.get(i).tests.get(t).results.get(1).rank;
     }
+    private boolean isCorrect(TestData t){
+        String s1[] = t.author.trim().split(" ");
+        String s2 = t.results.get(0).author;
+        if (s1.length <= 1) {
+            //if (!defectFiles.contains(ml.logs.get(i).name))
+            //   defectFiles.add(ml.logs.get(i).name);
+            return false;
+        }
+
+        if (s2.contains(" ")) {
+            s2 = (s2.split(" "))[0];
+        }
+
+        return s1[1].equals(s2) && t.results.get(0).rank
+                != t.results.get(1).rank;
+    }
     
     private static void getFilesRecursive(File pFile, ArrayList<File> list) {
         //System.out.println(pFile.getName()+pFile.listFiles().length);
@@ -215,12 +276,17 @@ class MultiLog {
     }
 
     public static void main(String args[]){
-        MultiLog ml = new MultiLog("../../SciFi", "Sci");
-
-        ml.exportCSV();
-        
-        ml = new MultiLog("../../Mystery", "Mys");
-
-        ml.exportCSV();
+        int size[] = {0, 100, 250, 500, 1000, 2500, 5000, 10000};
+        MultiLog ml;
+        for (int i : size){
+            System.out.println(i);
+            //*
+            ml = new MultiLog("../../SciFi/" + i, "Sci_" + i);
+            ml.exportCSV();
+            
+            ml = new MultiLog("../../Mystery/" + i, "Mys_" + i);
+            ml.exportCSV();
+            //*/
+        }
     }
 }
