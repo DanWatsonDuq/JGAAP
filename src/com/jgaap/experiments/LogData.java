@@ -431,7 +431,7 @@ public class LogData {
 		// Canonicizers
 		int size = tests.get(0).canonicizers.size();
 		for (int i = 0; i < size; i++){
-			method += tests.get(0).canonicizers.get(i);
+			method += tests.get(0).canonicizers.get(i).replaceAll(",", "");
 			if (i < size-1)
 				method += "&";
 		}
@@ -444,13 +444,13 @@ public class LogData {
 		
 		int size2;
 		for (int i = 0; i < size; i++){
-		    method += tests.get(0).eventDrivers.get(i).name;
+		    method += tests.get(0).eventDrivers.get(i).name.replaceAll(",", "");
 		    
 		    size2 = tests.get(0).eventDrivers.get(i).eventCullers.size();
 		    if (size2 > 0){
                 method += "*";
                 for (int j = 0; j < size2; j++){
-                    method += tests.get(0).eventDrivers.get(i).eventCullers.get(j);
+                    method += tests.get(0).eventDrivers.get(i).eventCullers.get(j).replaceAll(",", "");
                     if (j < size2-1){
                         method += "*";
                     }
@@ -468,7 +468,7 @@ public class LogData {
 			method += "#";
 		
 		for (int i = 0; i < size; i++){
-			method += tests.get(0).analysis.get(i);
+			method += tests.get(0).analysis.get(i).replaceAll(",", "");
 			if (i < size-1)
 				method += "&";
 		}
