@@ -52,7 +52,7 @@ class MultiLog {
 	            logs.add(new LogData(file));
 	        }
 	        
-	        Collections.sort(logs);
+	        //Collections.sort(logs);
         } catch(NotADirectory | InvalidLogFileType | InvalidLogStructure
                 | ResultContainsNaN e){
             e.printStackTrace();
@@ -98,6 +98,9 @@ class MultiLog {
                 logName = logs.get(i).tests.get(0).questionedDoc;
                 
                 if (methodCount == 0 && logSuffix.add(logName)){
+                    
+                    System.out.println("logSuffix " + logSuffix.toString());
+                    
                     methodCount = i;
                     break;
                 }
@@ -123,7 +126,7 @@ class MultiLog {
                
                 for (int j = 0; j < testsSize; j++) { // rows
                     
-                    // print column header:
+                    // print row j's column header:
                     try {
                         pw.print(logs.get(currentLog).tests.get(j).questionedDoc + ",");
                     } catch (IndexOutOfBoundsException e) {
@@ -159,8 +162,11 @@ class MultiLog {
                         }
                         
                         pw.print(isCorrect(i, j)? '1':'0');
-                        if (i < methodCount - 1)
+                        if (i < currentLog + methodCount - 1)
                             pw.print(",");
+                        else {
+                            System.out.println();
+                        }
                     }
                     pw.println();
                 }
