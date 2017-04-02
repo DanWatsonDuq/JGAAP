@@ -10,4 +10,9 @@ rld = function(){
 	source("loadData.R")
 	source("testProc.R")
 	source("manifest.R")
+	source("naiveSelector.R")
+	source("processAll.R")
+	source("csvToDataSet.R")
+	source("ErrorOfXOverY.R")
+	source("compareForDataset.R")
 }

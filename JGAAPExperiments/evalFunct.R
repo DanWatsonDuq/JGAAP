@@ -1,21 +1,19 @@
 
-evalFunct<- function(mu,sigma){
+evalFunct<- function(binData){
 	
-	
-	mu = as.numeric(mu);
-	print(mu)
-	sigma = convertToNum(sigma)
-	funct = function(cand, iter){
-		
+	mu = colMeans(binData)
+	sigma = cor(binData)
+	#mu = as.numeric(mu);
+	#print(mu)
+	#sigma = convertToNum(sigma)
+	funct = function(candlist, iter){
+		#print(mu)
+		cand = as.numeric(candlist)	
 		Muse = mu[cand]
-	
 		newSigma = sigma[cand,cand]
-		
-
-		metric = mean(takeVotes(1000*iter, Muse, newSigma))
-		
-		
+		metric = mean(takeVotes(10000*iter, Muse, newSigma))
 		return(metric)
 	}
+	
 	return(funct)
 }

@@ -11,7 +11,7 @@ testProc = function(mu, sigma){
 		
 	print(mu)
 	print(sigma)
-	res = vote(iter,mu, diag(length(mu)))
+	res = vote(iter,mu, sigma)
 	print(res)
 	muObs = colMeans(res)
 	print(mu)

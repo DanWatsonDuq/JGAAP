@@ -1,9 +1,8 @@
 vote <-function(n, mu, cov){
   
-  #print(cov)
-
-  normresults = mvrnorm(n, mu, cov)
-  print("result has")
+ 
+  normresults = mvrnorm(n, numeric(length(mu)), cov)
+  #print("result has")
   Y = matrix(nrow = n, ncol = length(mu))
   for(j in 1:n)
   {
@@ -13,7 +12,7 @@ vote <-function(n, mu, cov){
 			Y[j,i] = 1
 		}
 		else{
-			Y[j,i] = 0
+			Y[j,i] = -1
 	 	}
 	  }
 	}
