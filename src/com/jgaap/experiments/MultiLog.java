@@ -124,7 +124,7 @@ class MultiLog {
             System.out.println("results = " + resultsSize);
             
             String qDoci, qDocCurrent, methodi,methodCurrent;
-            methodCurrent = logs.get(0).printMethod();
+            //methodCurrent = logs.get(0).printMethod();
 
             ArrayList<TestData> testDoc;
             
@@ -157,6 +157,7 @@ class MultiLog {
                                 + qDoci
                                 );
                     }
+                    /*
                     if (!methodCurrent.equals(methodi)){
                         System.err.println("Error: methods of docs do not "
                                 + "match!\n"
@@ -165,11 +166,13 @@ class MultiLog {
                                 );
                     }
                     //*/
+                    
                     pw.print(isCorrect(testDoc.get(j))? '1':'0');
                     if (i < methodCount - 1)
                         pw.print(",");
                     i++;
                 }
+                
                 pw.println();
                 j++;
             }
@@ -237,15 +240,22 @@ class MultiLog {
     public static void main(String args[]){
         int size[] = {0, 100, 250, 500, 1000, 2500, 5000, 10000};
         MultiLog ml;
+        
+        /*
+        ml = new MultiLog("../../SciFi/0", "Sci_0");
+        ml.exportCSV();
+        //*/
+        //*
         for (int i : size){
             System.out.println(i);
-            //*
+            //
             ml = new MultiLog("../../SciFi/" + i, "Sci_" + i);
             ml.exportCSV();
             
             ml = new MultiLog("../../Mystery/" + i, "Mys_" + i);
             ml.exportCSV();
-            //*/
+            //
         }
+        //*/
     }
 }
