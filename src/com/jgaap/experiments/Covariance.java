@@ -326,9 +326,9 @@ class Covariance {
 			System.err.println("Number of Method Names (" + methods.size() + ") does not match the size of the provided array's columns" + "(" + mat.length + ")");
 		}
 	}
-
+	/*
 	public static void main(String[] args) {
-		MultiLog ml = new MultiLog("logs", "BatchName", false);
+		//MultiLog ml = new MultiLog("logs", "BatchName", false);
 		double[][] m = process(ml, true);
 
 		System.out.println("size = " + m.length + " by " + m[0].length);
@@ -337,4 +337,5 @@ class Covariance {
 		for (int i = 0; i < defectFiles.size(); i++)
 			System.out.println(defectFiles.get(i));
 	}
+	//*/
 }

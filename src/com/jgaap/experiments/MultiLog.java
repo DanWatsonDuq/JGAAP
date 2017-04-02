@@ -15,9 +15,11 @@ package com.jgaap.experiments;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.lang.IndexOutOfBoundsException;
+import java.text.Collator;
 
 class MultiLog {
 	public String name;
@@ -38,9 +40,9 @@ class MultiLog {
 	            throw new NotADirectory();
 	        }
 	        if (name.isEmpty()) {
-	            this.name = mlDir.getName();
+	            this.name = mlDir.getName().trim();
 	        } else {
-	            this.name = name;
+	            this.name = name.trim();
 	        }
 	        
 	        ArrayList <File> files = new ArrayList<>();
@@ -49,81 +51,12 @@ class MultiLog {
 	        for (File file:files){
 	            logs.add(new LogData(file));
 	        }
+	        
+	        Collections.sort(logs);
         } catch(NotADirectory | InvalidLogFileType | InvalidLogStructure
                 | ResultContainsNaN e){
             e.printStackTrace();
         }
-	}
-
-	/**
-	 * Constructor creates a MultiLog from a directory of log files with each
-	 * log a different method, or from a directory of directories of log files,
-	 * where each directoy signifies a new method.
-	 *
-	 * @param pathToDir String representation of file path to Multi Log Dir
-	 * @param name String name of MultiLog, default name = Multi Log Dir
-	 * @param byDir Boolean switch: True: Method change by directories
-     *
-     * TODO May want to edit LogData to have a constructor that
-     * accepts File
-	 */
-	public MultiLog(String pathToDir, String name, boolean byDir) {
-		try {
-			File mlDir = new File(pathToDir);
-			if (!mlDir.isDirectory()) {
-				throw new NotADirectory();
-			}
-			if (name.isEmpty()) {
-				this.name = mlDir.getName();
-			} else {
-				this.name = name;
-			}
-
-			if (byDir) {
-				for (final File file : mlDir.listFiles()) {
-					try {
-						// TODO Need to ensure I do not add nulls at all to logs
-						logs.add(new LogData(file.getPath(), true));
-					} catch (InvalidLogFileType | InvalidLogStructure | NotADirectory e) {
-						continue;
-					} catch (ResultContainsNaN e) {
-						e.printStackTrace();
-						continue;
-						/*
-						 * TODO by catching this error, do I immediately stop
-						 * the creation of that log? If so good, otherwise, need
-						 * to delete or overwrite that log form logs.
-						 */
-					}
-				}
-			} else {
-				// System.out.println("Number of Files:" +
-				// mlDir.listFiles().length);
-				for (final File file : mlDir.listFiles()) {
-					try {
-						// TODO Need to ensure I do not add nulls at all to logs
-						logs.add(new LogData(file.getPath()));
-					} catch (InvalidLogFileType | InvalidLogStructure | NotADirectory e) {
-						continue;
-					} catch (ResultContainsNaN e) {
-						e.printStackTrace();
-						continue;
-						/*
-						 * TODO by catching this error, do I immediately stop
-						 * the creation of that log? If so good, otherwise, need
-						 * to delete or overwrite that log form logs.
-						 */
-					}
-				}
-			}
-		}
-		/*
-		 * catch (IOException e) { e.printStackTrace(); }
-		 */
-		catch (NotADirectory e) {
-			System.err.println("Error: " + pathToDir + " is not a valid " + "directory");
-			e.printStackTrace();
-		}
 	}
 
 	public void print() {
@@ -135,8 +68,11 @@ class MultiLog {
 	}
 
    /**                                                                         
-     * Exports a csv table of MLog's methods individual binary success/failure authorship
-     * attribution for each test document.
+     * Exports a csv table of MLog's methods individual binary success/failure
+     * authorship attribution for each test document.
+     * 
+     * TODO Need to ensure the data represented on in the CSV is correct, as in
+     * the data 
      */
     public void exportCSV() {
         try {
@@ -156,7 +92,7 @@ class MultiLog {
             logSuffix.add(logs.get(0).tests.get(0).questionedDoc);
             
             
-            // print header row (Methods)
+            // print header row (Methods) based on first log's methods
             pw.print(name + ",");
             for (int i = 0; i < logs.size(); i++) {
                 logName = logs.get(i).tests.get(0).questionedDoc;
@@ -171,21 +107,23 @@ class MultiLog {
                     pw.print(",");
             }
             pw.println();
-
-            // print by row (test docs).
-            //int currentLog = 0; // increment after j > tests.size()
             
             System.out.println("logs = " + logs.size());
             System.out.println("methodCount = " + methodCount);
             System.out.println("tests = " + testsSize);
             System.out.println("results = " + resultsSize);
             
+            String qDoci, qDocCurrent, methodi,methodCurrent;
+            
+            // Print by row.
+            // TODO Confirm this step size by methodCount is correct
             for (int currentLog = 0; currentLog < logs.size();
                     currentLog += methodCount){
                 logName = logs.get(currentLog).name;
                
                 for (int j = 0; j < testsSize; j++) { // rows
-
+                    
+                    // print column header:
                     try {
                         pw.print(logs.get(currentLog).tests.get(j).questionedDoc + ",");
                     } catch (IndexOutOfBoundsException e) {
@@ -195,8 +133,31 @@ class MultiLog {
                                 + logs.get(0).name + " which has " + testsSize + "!");
                         continue;
                     }
-
-                    for (int i = 0; i < methodCount; i++) {
+                    
+                    qDocCurrent = logs.get(currentLog).tests.get(j).questionedDoc;
+                    methodCurrent = logs.get(currentLog).printMethod();
+                    
+                    // Print row's (testDoc's) binary results across methods
+                    for (int i = currentLog; i < currentLog + methodCount && i < logs.size(); i++) {
+                        qDoci = logs.get(i).tests.get(j).questionedDoc;
+                        methodi = logs.get(i).printMethod();
+                        
+                        // Error check for reliable data representation in table
+                        if (!qDocCurrent.equals(qDoci)){
+                            System.err.println("Error: questionedDocs do not "
+                                    + "match!\n"
+                                    + qDocCurrent + " != "
+                                    + qDoci
+                                    );
+                        }
+                        if (!methodCurrent.equals(methodi)){
+                            System.err.println("Error: methods of docs do not "
+                                    + "match!\n"
+                                    + methodCurrent + "\n!=\n"
+                                    + methodi + "\n"
+                                    );
+                        }
+                        
                         pw.print(isCorrect(i, j)? '1':'0');
                         if (i < methodCount - 1)
                             pw.print(",");
@@ -210,7 +171,14 @@ class MultiLog {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Checks if correct author is first in results of test in specific log
+     * 
+     * @param i log number
+     * @param t test number
+     * @return true if the correct author to questioned doc is ranked first
+     */
     private boolean isCorrect(int i, int t){
         String s1[] = logs.get(i).tests.get(t).author.trim().split(" ");
         String s2 = logs.get(i).tests.get(t).results.get(0).author;

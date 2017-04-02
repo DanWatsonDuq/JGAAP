@@ -1,7 +1,8 @@
 package com.jgaap.experiments;
 /**
  * Given JGAAP log file, parses all useful data from log. Parser is highly
- * dependent based on in text qualities of the log file.
+ * dependent based on in text qualities of the log file. Log must only have one
+ * single method tested. Log is identified by its method
  *
  * @author Derek S. Prijatelj
  */
@@ -10,19 +11,19 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeSet;
+import java.text.Collator;
 
-public class LogData {
+public class LogData implements Comparable<LogData>{
 	public class Tuple {
 		public int rank;
 		public String author;
 		public double value;
 
-		public Tuple() {
-		}
-
+		public Tuple() {}
 		public Tuple(int rank, String author, double value) {
 			this.rank = rank;
-			this.author = author;
+			this.author = author.trim();
 			this.value = value;
 		}
 	}
@@ -35,49 +36,59 @@ public class LogData {
 	 * together neatly in an ArrayList. If there is an empty line after every
 	 * test, this should be implementable. This may not be necessary though,
 	 * only prettier.
+	 * 
+	 * TODO switch from ArrayList to TreeSet and sort Lexically
 	 */
-	public class TestData {
+	public class TestData implements Comparable<TestData>{
 		public String author;
 		public String questionedDoc;
-		public ArrayList<String> canonicizers;
-		public ArrayList<EventDriver> eventDrivers;
-		public ArrayList<String> analysis;
+		public TreeSet<String> canonicizers;
+		public TreeSet<EventDriver> eventDrivers;
+		public TreeSet<String> analysis;
 		public ArrayList<Tuple> results;
 
-		public TestData() {
-		}
-
+		public TestData() {}
 		public TestData(String author, String docName) {
-			this.author = author;
-			questionedDoc = docName;
-			canonicizers = new ArrayList<>();
-			eventDrivers = new ArrayList<>();
-			analysis = new ArrayList<>();
+			this.author = author.trim();
+			questionedDoc = docName.trim();
+			canonicizers = new TreeSet<>(Collator.getInstance());
+			eventDrivers = new TreeSet<>();
+			analysis = new TreeSet<>(Collator.getInstance());
 			results = new ArrayList<>();
 		}
+        public int compareTo(TestData o) {
+            return questionedDoc.compareTo(o.questionedDoc);
+        }
 	}
 
-	public class EventDriver {
+	public class EventDriver implements Comparable<EventDriver>{
 		public String name;
 		public ArrayList<String> eventCullers;
 
-		public EventDriver() {
-		}
-
+		public EventDriver() {}
 		public EventDriver(String name) {
-			this.name = name;
+			this.name = name.trim();
 			eventCullers = new ArrayList<>();
+		}
+		public int compareTo(EventDriver o){
+		    return name.compareTo(o.name);
 		}
 	}
 
 	public String name; // either name of single log file or dir of logs.
 	public ArrayList<TestData> tests = new ArrayList<>();
 
-	public LogData() {
+	/**
+	 * Normal compareTo, but assumes that LogData is identified by its method
+	 */
+	public int compareTo(LogData o){
+	    return printMethod().compareTo(o.printMethod());
 	}
+	
+	public LogData() {}
 
 	public LogData(String filePath) throws InvalidLogFileType, InvalidLogStructure, NotADirectory, ResultContainsNaN {
-	    name = filePath;
+	    name = filePath.trim();
 	    if (filePath.substring(filePath.lastIndexOf('.') ).equals(".txt")){
 	        File log = new File(filePath);
 	        parseBegin(log);
@@ -94,73 +105,6 @@ public class LogData {
             throw new InvalidLogFileType();
         }
     }
-
-	/**
-	 * Constructs LogData object either from a single given file, or a given
-	 * directory known to contain files that have the same test set and have the
-	 * exact same test method.
-	 *
-	 * @param logFilePath
-	 *            String of file path to the log file
-	 * @param isDir
-	 *            True if given path is to a directory, file otherwise
-	 */
-	public LogData(String filePath, boolean isDir) throws InvalidLogFileType, InvalidLogStructure, NotADirectory, ResultContainsNaN {
-		//*
-	    try {
-			if (isDir) {
-				File dir = new File(filePath);
-				if (!dir.isDirectory()) {
-					throw new NotADirectory("Provided file path is not to " + "directory");
-				}
-				name = dir.getName();
-				for (final File logDir : dir.listFiles()) {
-					try {
-						// TODO fix weak file type check
-						if (logDir.isDirectory())
-							throw new NotADirectory("");
-						parseBegin(logDir);
-					} catch (InvalidLogFileType | InvalidLogStructure | NotADirectory e) {
-						System.err.println("Error: " + logDir.getPath() + " is not a valid log file: Continuing with test batch");
-						e.printStackTrace();
-						continue;
-					} catch (ResultContainsNaN e) {
-						System.err.println("Error: " + logDir.getPath() + " contains test results with a score of NaN");
-						throw e;
-					}
-				}
-			} else {
-				// TODO fix weak file type check
-				if (!(filePath.contains(".") 
-                    && (filePath.substring(filePath.lastIndexOf('.'))).equals(".txt"))
-                    || !filePath.substring(filePath.lastIndexOf('.')).equals(".DS_Store")
-                    )
-					throw new InvalidLogFileType();
-
-				File logFile = new File(filePath);
-				if (logFile.isDirectory()) {
-					throw new InvalidLogFileType(logFile.getPath() + "File should not be directory");
-				}
-
-				name = logFile.getName();
-				try {
-					parseBegin(logFile);
-				} catch (ResultContainsNaN e) {
-					System.err.println("Error: " + logFile.getPath() + " contains test results with a score of NaN");
-					throw e;
-				}
-			}
-		} catch (InvalidLogFileType e) {
-			System.err.println("Error: " + filePath + " is not a valid " + "log file type");
-			e.printStackTrace();
-			throw e;
-		} catch (NotADirectory e) {
-			System.err.println("Error: " + filePath + " is not a valid " + "directory");
-			e.printStackTrace();
-			throw e;
-		}
-		//*/
-	}
 
 	/**
 	 * Given a log file, begins the parsing process if valid log file.
@@ -390,24 +334,24 @@ public class LogData {
 			System.out.println("\nQuestioned Document: " + tests.get(i).questionedDoc);
 
 			System.out.println("Canonicizers:");
-			for (int j = 0; j < tests.get(i).canonicizers.size(); j++) {
-				System.out.println("\t" + tests.get(i).canonicizers.get(j));
+			for (String canonicizer: tests.get(i).canonicizers) {
+				System.out.println("\t" + canonicizer);
 			}
 
 			System.out.println("EventDrivers:");
-			for (int j = 0; j < tests.get(i).eventDrivers.size(); j++) {
-				System.out.println("\t" + tests.get(i).eventDrivers.get(j).name);
-				if (!tests.get(i).eventDrivers.get(j).eventCullers.isEmpty()) {
+			for (EventDriver ed: tests.get(i).eventDrivers) {
+				System.out.println("\t" + ed.name);
+				if (!ed.eventCullers.isEmpty()) {
 					System.out.println("\t\tEventCullers:");
 				}
-				for (int k = 0; k < tests.get(i).eventDrivers.get(j).eventCullers.size(); k++) {
-					System.out.println("\t\t\t" + tests.get(i).eventDrivers.get(j).eventCullers.get(k));
+				for (String culler : ed.eventCullers) {
+					System.out.println("\t\t\t" + culler);
 				}
 			}
 
 			System.out.println("Analysis:");
-			for (int j = 0; j < tests.get(i).analysis.size(); j++) {
-				System.out.println("\t" + tests.get(i).analysis.get(j));
+			for (String ana : tests.get(i).analysis) {
+				System.out.println("\t" + ana);
 			}
 
 			for (int j = 0; j < tests.get(i).results.size(); j++) {
@@ -429,36 +373,42 @@ public class LogData {
 		String method = new String();
 		
 		// Canonicizers
-		int size = tests.get(0).canonicizers.size();
-		for (int i = 0; i < size; i++){
-			method += tests.get(0).canonicizers.get(i).replaceAll(",", "");
+		int i = 0, j = 0;
+		int size = tests.get(0).canonicizers.size(), size2;
+		for (String canonicizer : tests.get(0).canonicizers){
+			method += canonicizer.replaceAll(",", "");
 			if (i < size-1)
 				method += "&";
+			i++;
 		}
 		
 		// EventDrivers and EventCullers
 		size = tests.get(0).eventDrivers.size();
-
+		
 		if (size > 0)
 	        method += "#";
 		
-		int size2;
-		for (int i = 0; i < size; i++){
-		    method += tests.get(0).eventDrivers.get(i).name.replaceAll(",", "");
+		i = 0;
+		for (EventDriver ed : tests.get(0).eventDrivers){
+		    method += ed.name.replaceAll(",", "");
 		    
-		    size2 = tests.get(0).eventDrivers.get(i).eventCullers.size();
+		    size2 = ed.eventCullers.size();
 		    if (size2 > 0){
                 method += "*";
-                for (int j = 0; j < size2; j++){
-                    method += tests.get(0).eventDrivers.get(i).eventCullers.get(j).replaceAll(",", "");
-                    if (j < size2-1){
+                
+                j = 0;
+                for (String culler: ed.eventCullers){
+                    method += culler.replaceAll(",", "");
+                    
+                    if (j < size2-1)
                         method += "*";
-                    }
+                    j++;
                 }
 		    }
 		    
 			if (i < size-1)
 				method += "&";
+			i++;
 		}
 
 		// Analysis
@@ -467,10 +417,13 @@ public class LogData {
 		if (size > 0)
 			method += "#";
 		
-		for (int i = 0; i < size; i++){
-			method += tests.get(0).analysis.get(i).replaceAll(",", "");
+		i = 0;
+		for (String ana : tests.get(0).analysis){
+			method += ana.replaceAll(",", "");
+			
 			if (i < size-1)
 				method += "&";
+			i++;
 		}
 		
 		return method;

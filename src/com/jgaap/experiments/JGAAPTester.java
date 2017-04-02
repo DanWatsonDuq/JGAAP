@@ -253,7 +253,7 @@ public class JGAAPTester {
 		}
 
 	}
-
+	/*
 	private static void correlationExperiment() throws IOException {
 
 		// BasicConfigurator.configure();
@@ -272,6 +272,7 @@ public class JGAAPTester {
 		double[][] results = Covariance.process(ml);
 
 	}
+	//*/
 
 	private static void sanFranciscoMethods() throws FileNotFoundException {
 		int[] ns = { 3, 4, 6, 8 };
