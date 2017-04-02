@@ -61,7 +61,8 @@ class MultiLog {
             e.printStackTrace();
         }
 	}
-
+	
+	/*
 	public void print() {
 		System.out.println("\nMultiLog: " + name);
 		for (int i = 0; i < logs.size(); i++) {
@@ -69,6 +70,7 @@ class MultiLog {
 			System.out.println();
 		}
 	}
+	//*/
 
    /**                                                                         
      * Exports a csv table of MLog's methods individual binary success/failure
@@ -88,17 +90,17 @@ class MultiLog {
             PrintWriter pw = new PrintWriter(csvFile);
 
             int testsSize = logs.get(0).tests.size(); // #methods
-            int resultsSize = logs.get(0).tests.get(0).results.size(); // #testdocs
+            int resultsSize = logs.get(0).tests.first().results.size(); // #testdocs
             int methodCount = logs.size();
             String logName;
             HashSet<String> logSuffix = new HashSet<>();
-            logSuffix.add(logs.get(0).tests.get(0).questionedDoc);
+            logSuffix.add(logs.get(0).tests.first().questionedDoc);
             
             
             // print header row (Methods) based on first log's methods
             pw.print(name + ",");
             for (int i = 0; i < logs.size(); i++) {
-                logName = logs.get(i).tests.get(0).questionedDoc;
+                logName = logs.get(i).tests.first().questionedDoc;
                 
                 /*
                 if (methodCount == 0 && logSuffix.add(logName)){
@@ -124,6 +126,8 @@ class MultiLog {
             String qDoci, qDocCurrent, methodi,methodCurrent;
             methodCurrent = logs.get(0).printMethod();
 
+            ArrayList<TestData> testDoc;
+            
             // Print by row.
             int i, j = 0;
             for (TestData test : logs.get(0).tests){
@@ -133,11 +137,19 @@ class MultiLog {
                 
                 i = 0;
                 for (LogData method : logs){
+                    testDoc = new ArrayList<TestData>(method.tests);
                     
-                    qDoci = logs.get(i).tests.get(j).questionedDoc;
-                    methodi = logs.get(i).printMethod();
+                    qDoci = testDoc.get(j).questionedDoc;
+                    methodi = method.printMethod();
+                    
+                    /*
+                    System.out.println("Size of testDoc.results: " + testDoc.get(j).results.size());
+                    System.out.println("qDoci = " + qDoci);
+                    System.out.println(methodi + "\n");
+                    //*/
                     
                     // Error check for reliable data representation in table
+                    //*
                     if (!qDocCurrent.equals(qDoci)){
                         System.err.println("Error: questionedDocs do not "
                                 + "match!\n"
@@ -152,8 +164,8 @@ class MultiLog {
                                 + methodi + "\n"
                                 );
                     }
-                    
-                    pw.print(isCorrect(method.tests.get(j))? '1':'0');
+                    //*/
+                    pw.print(isCorrect(testDoc.get(j))? '1':'0');
                     if (i < methodCount - 1)
                         pw.print(",");
                     i++;
@@ -162,61 +174,6 @@ class MultiLog {
                 j++;
             }
             
-            // TODO Confirm this step size by methodCount is correct
-            /*
-            for (int currentLog = 0; currentLog < logs.size();
-                    currentLog += methodCount){
-               
-                for (int j = 0; j < testsSize; j++) { // rows
-                    
-                    // print row j's column header:
-                    try {
-                        pw.print(logs.get(currentLog).tests.get(j).questionedDoc + ",");
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println("Warning: Current dir "
-                                + logs.get(currentLog).name + " has " 
-                                + logs.get(currentLog).tests.size()
-                                + " files (methods) and is not equal to first dir "
-                                + logs.get(0).name + " which has " + testsSize + "!");
-                        continue;
-                    }
-                    
-                    qDocCurrent = logs.get(currentLog).tests.get(j).questionedDoc;
-                    methodCurrent = logs.get(currentLog).printMethod();
-                    
-                    // Print row's (testDoc's) binary results across methods
-                    for (int i = currentLog; i < currentLog + methodCount && i < logs.size(); i++) {
-                        qDoci = logs.get(i).tests.get(j).questionedDoc;
-                        methodi = logs.get(i).printMethod();
-                        
-                        // Error check for reliable data representation in table
-                        if (!qDocCurrent.equals(qDoci)){
-                            System.err.println("Error: questionedDocs do not "
-                                    + "match!\n"
-                                    + qDocCurrent + " != "
-                                    + qDoci
-                                    );
-                        }
-                        if (!methodCurrent.equals(methodi)){
-                            System.err.println("Error: methods of docs do not "
-                                    + "match!\n"
-                                    + methodCurrent + "\n!=\n"
-                                    + methodi + "\n"
-                                    );
-                        }
-                        
-                        pw.print(isCorrect(i, j)? '1':'0');
-                        if (i < currentLog + methodCount - 1)
-                            pw.print(",");
-                        else {
-                            System.out.println();
-                        }
-                    }
-                    pw.println();
-                }
-            }
-            //*/
-
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -230,6 +187,7 @@ class MultiLog {
      * @param t test number
      * @return true if the correct author to questioned doc is ranked first
      */
+    /*
     private boolean isCorrect(int i, int t){
         String s1[] = logs.get(i).tests.get(t).author.trim().split(" ");
         String s2 = logs.get(i).tests.get(t).results.get(0).author;
@@ -246,6 +204,7 @@ class MultiLog {
         return s1[1].equals(s2) && logs.get(i).tests.get(t).results.get(0).rank
                 != logs.get(i).tests.get(t).results.get(1).rank;
     }
+    //*/
     private boolean isCorrect(TestData t){
         String s1[] = t.author.trim().split(" ");
         String s2 = t.results.get(0).author;

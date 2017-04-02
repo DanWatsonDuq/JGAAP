@@ -146,6 +146,7 @@ class PairwiseIndependence{
      * @return Returns true iff top most document author matches correct author
      *          and there is no tie for first place. Otherwise, false.
      */
+    /*
     private static boolean isCorrect(MultiLog ml, int i, int t){
         String s1[] = ml.logs.get(i).tests.get(t).questionedDoc.split(" ");
         String s2 = ml.logs.get(i).tests.get(t).results.get(0).author;
@@ -154,6 +155,7 @@ class PairwiseIndependence{
             ml.logs.get(i).tests.get(t).results.get(0).rank != 
             ml.logs.get(i).tests.get(t).results.get(1).rank;
     }
+    //*/
 
     private static boolean isICorrectGivenJ(MultiLog ml, int i, int j,
             int t){

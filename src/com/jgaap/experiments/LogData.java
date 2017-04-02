@@ -75,7 +75,7 @@ public class LogData implements Comparable<LogData>{
 	}
 
 	public String name; // either name of single log file or dir of logs.
-	public ArrayList<TestData> tests = new ArrayList<>();
+	public TreeSet<TestData> tests = new TreeSet<>();
 
 	/**
 	 * Normal compareTo, but assumes that LogData is identified by its method
@@ -115,7 +115,7 @@ public class LogData implements Comparable<LogData>{
 		try {
 			Scanner sc = new Scanner(logFile);
 			String line, author, docName;
-
+			TestData test;
 			// loops through all blank lines until all log tests processed
 			while (sc.hasNextLine()) {
 				line = sc.nextLine();
@@ -124,11 +124,14 @@ public class LogData implements Comparable<LogData>{
 					author = line.substring(0, line.lastIndexOf(' '));
 					docName = line.substring(line.lastIndexOf(' ')+1);
 
-					tests.add(new TestData(author, docName));
+					test = new TestData(author, docName);
+					//tests.add(new TestData(author, docName));
+					tests.add(test);
 					line = sc.nextLine();
 
 					if (line.length() >= 12 && (line.substring(0, 12)).equals("Canonicizers") && sc.hasNextLine()) {
-						parseCanonicizer(sc, tests.get(tests.size() - 1));
+						//parseCanonicizer(sc, tests.get(tests.size() - 1));
+					    parseCanonicizer(sc, test); // last added
 					} else {
 						sc.close();
 						throw new InvalidLogStructure();
@@ -325,6 +328,7 @@ public class LogData implements Comparable<LogData>{
 	 *
 	 * EventDrivers will obviously be incorrect due to the above todo.
 	 */
+	/*
 	public void print() {
 		System.out.println("\nLog: " + name);
 		for (int i = 0; i < tests.size(); i++) {
@@ -358,6 +362,7 @@ public class LogData implements Comparable<LogData>{
 			}
 		}
 	}
+	//*/
 	
 	/**
 	 * Assumes all tests have the same exact linguistic analysis method
@@ -373,8 +378,8 @@ public class LogData implements Comparable<LogData>{
 		
 		// Canonicizers
 		int i = 0, j = 0;
-		int size = tests.get(0).canonicizers.size(), size2;
-		for (String canonicizer : tests.get(0).canonicizers){
+		int size = tests.first().canonicizers.size(), size2;
+		for (String canonicizer : tests.first().canonicizers){
 			method += canonicizer.replaceAll(",", "");
 			if (i < size-1)
 				method += "&";
@@ -382,13 +387,13 @@ public class LogData implements Comparable<LogData>{
 		}
 		
 		// EventDrivers and EventCullers
-		size = tests.get(0).eventDrivers.size();
+		size = tests.first().eventDrivers.size();
 		
 		if (size > 0)
 	        method += "#";
 		
 		i = 0;
-		for (EventDriver ed : tests.get(0).eventDrivers){
+		for (EventDriver ed : tests.first().eventDrivers){
 		    method += ed.name.replaceAll(",", "");
 		    
 		    size2 = ed.eventCullers.size();
@@ -411,13 +416,13 @@ public class LogData implements Comparable<LogData>{
 		}
 
 		// Analysis
-		size = tests.get(0).analysis.size();
+		size = tests.first().analysis.size();
 		
 		if (size > 0)
 			method += "#";
 		
 		i = 0;
-		for (String ana : tests.get(0).analysis){
+		for (String ana : tests.first().analysis){
 			method += ana.replaceAll(",", "");
 			
 			if (i < size-1)
