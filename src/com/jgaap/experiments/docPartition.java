@@ -19,6 +19,13 @@ public class docPartition{
     
 
     protected static void multiPartition(int[] wordCount, String dir,
+        String export){
+        for (int i = 0; i < wordCount.length; i++){
+            strict(wordCount[i], dir, export + "/wordCount" + wordCount[i], 0);
+        }
+    }
+
+    protected static void multiPartition(int[] wordCount, String dir,
         String export, int maxParts){
         for (int i = 0; i < wordCount.length; i++){
             strict(wordCount[i], dir, export + "/wordCount" + wordCount[i],
@@ -36,6 +43,10 @@ public class docPartition{
      */
     protected static void strict(int wordCount, String dirOfDocs,
             String exportPath, int maxParts){
+        if (maxParts <= 0){
+            maxParts = Integer.MAX_VALUE - 1;
+        }
+        
         partition(wordCount, dirOfDocs, exportPath, true, maxParts);
     }
 
@@ -49,6 +60,9 @@ public class docPartition{
      */
     protected static void lenient(int wordCount, String dirOfDocs,
             String exportPath, int maxParts){
+        if (maxParts == 0){
+            maxParts = Integer.MAX_VALUE - 1;
+        }
         partition(wordCount, dirOfDocs, exportPath, false, maxParts);
     }
 
@@ -124,10 +138,10 @@ public class docPartition{
                         // make dir for file
                         
                         parts = partitionFile(wordCount, f,
-                            exportPath + "/"+ file.getName() + "/" + f.getName(),
+                            exportPath +"/"+ file.getName() +"/"+ f.getName(),
                             strict, maxParts);
 
-        System.out.println("\n\n   *%*%*%*   "+f.getPath()+"\n\n");
+        //System.out.println("\n\n   *%*%*%*   "+f.getPath()+"\n\n");
 
                         numOfParts.put(f.getName(), parts);
                         locAuthor = f.getPath().lastIndexOf("Author");
@@ -174,13 +188,16 @@ public class docPartition{
             PrintWriter writer = new PrintWriter(subDoc, "UTF-8");
 
             while((cint = buffRead.read()) != -1 && subDocNum < maxParts+1){
+
+    //System.out.println("loop Reading File");
+
                 c = (char)cint;
                 writer.write(c);
 
 
-                if (isAlphaNum(c) && !makingWord){
+                if (!Character.isWhitespace(c) && !makingWord){
                     makingWord = true;
-                } else if (!isAlphaNum(c) && makingWord){
+                } else if (Character.isWhitespace(c) && makingWord){
                     numWords++;
                     makingWord = false;
                 }
@@ -213,19 +230,14 @@ public class docPartition{
             e.printStackTrace();
         }
 
-        System.out.println("    File partitioned into " + subDocNum + " parts");
 
         if (subDocNum < maxParts){
+        System.out.println("    File partitioned into "+ subDocNum + " parts");
             return subDocNum;
         } else {
+        System.out.println("    File partitioned into "+ (subDocNum-1) +" parts");
             return subDocNum-1;
         }
-    }
-
-    // What about hyphenated words? and other special cases?
-    private static boolean isAlphaNum(char c){
-        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
-            ||c >= '0' && c <= '9';
     }
 
     /**
@@ -276,7 +288,7 @@ public class docPartition{
             exportPath + "/" + "newLoad.csv"
             );
 
-    System.out.println("\n\nexportPath = "+exportPath+"\n\n");
+    //System.out.println("\n\nexportPath = "+exportPath+"\n\n");
 
         try{
             FileReader in = new FileReader(load);
@@ -313,8 +325,8 @@ public class docPartition{
                     //filePart = path.substring(path.lastIndexOf("\\")+1);
                     
 
-        System.out.println("\n\n"+ path);
-        System.out.println(filePart +"\n\n");
+        //System.out.println("\n\n"+ path);
+        //System.out.println(filePart +"\n\n");
 
 
                     for (int i = 1; i < parts+1; i++){
@@ -350,9 +362,12 @@ public class docPartition{
      * Command Line Interface
      */
     protected static void cli(String[] args){
-        int wordCount[] = {10000, 5000, 2500, 1000, 500, 250, 100};
-
-        if (args.length == 3){
+        //int wordCount[] = {10000, 5000, 2500, 1000, 500, 250, 100};
+        int wordCount[] = {1000};
+        
+        if (args.length == 2){
+            multiPartition(wordCount, args[0], args[1]);
+        } else if (args.length == 3){
             multiPartition(wordCount, args[0], args[1],
                 Integer.parseInt(args[2]));
         }
