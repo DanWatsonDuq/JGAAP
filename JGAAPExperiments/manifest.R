@@ -15,4 +15,6 @@ rld = function(){
 	source("csvToDataSet.R")
 	source("ErrorOfXOverY.R")
 	source("compareForDataset.R")
+	source("compareMCwithIS.R")
+	source("separate.R")
 }
