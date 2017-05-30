@@ -7,7 +7,7 @@
 err = function (binData, subset, w){
 	binData = binData[,subset]
 	binData[binData == 0] <- -1
-	votes = apply(binData,1,function(x) x%*%w[subset])
+	votes = apply(binData,1,mean)
 	
 	votes[votes>0] = 1
 	votes[votes<0] = 0

@@ -4,7 +4,7 @@ takeVotes <- function(n, mu, covmat){
 	for(i in 1:n){
 		theVote = theVotes[i,]
 		#print(theVote)
-		theVote = theVote %*% mu
+		theVote = mean(theVote) #for Unweighted Voting
 		#print(theVote)
 		if(theVote>0){
 			plurality[i]=1
