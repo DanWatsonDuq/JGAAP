@@ -109,14 +109,31 @@ ISvsOOSbulk = function(bindata1, bindata2, ks){
 }
 
 doItAll = function(){
-
-	assign("paper_SciFi_MCS_vs_IS",MCvsISbulk(scidata,3:10),.GlobalEnv)
-	assign("paper_SciFi_Halved_IS_vs_OOS",ISvsOOSbulk(convertToNum(scidatafirsthalf),convertToNum(scidatasecondhalf),3:10),.GlobalEnv)
-	assign("paper_SciFi_Halved_MCS_vs_OOS",MCvsOOSbulk(convertToNum(scidatafirsthalf),convertToNum(scidatasecondhalf),3:10),.GlobalEnv)
-	assign("paper_SciFi_MCS_vs_Mys_IS", MCvsOOSbulk(convertToNum(SCIDATA),convertToNum(MYSDATA),3:10),.GlobalEnv)
 	
-	assign("paper_Mys_MCS_vs_IS",MCvsISbulk(MYSDATA,3:10),.GlobalEnv)
-	assign("paper_Mys_Halved_IS_vs_OOS",ISvsOOSbulk(MYSDATA[1:670],MYSDATA[671:1378],3:10),.GlobalEnv)
-	assign("paper_Mys_Halved_MCS_vs_OOS",MCvsOOSbulk(MYSDATA[1:670],MYSDATA[671:1378],3:10),.GlobalEnv)
-	assign("paper_SciFi_IS_vs_Mys_IS", ISvsOOSbulk(convertToNum(SCIDATA),convertToNum(MYSDATA),3:10),.GlobalEnv)
+	#binData = SCIDATA[sample(nrow(SCIDATA)),]
+	
+	# halves roughly: odd total = uneven content count in diff halves.
+	#binData1 = binData[1:(floor(nrow(binData)/2)-1),]
+	#binData2 = binData[floor(nrow(binData)/2):nrow(binData),]
+	
+	
+	#assign("paper_SciFi_MCS_vs_IS",MCvsISbulk(scidata,3:10),.GlobalEnv)
+	#assign("paper_SciFi_Halved_IS_vs_OOS",ISvsOOSbulk(convertToNum(binData1),convertToNum(binData2),3:10),.GlobalEnv)
+	#assign("paper_SciFi_Halved_MCS_vs_OOS",MCvsOOSbulk(convertToNum(binData1),convertToNum(binData2),3:10),.GlobalEnv)
+	#assign("paper_SciFi_MCS_vs_Mys_IS", MCvsOOSbulk(convertToNum(SCIDATA),convertToNum(MYSDATA),3:10),.GlobalEnv)
+	
+	
+	
+	#-------------------------
+	binData = MYSDATA[sample(nrow(MYSDATA)),]
+	
+	# halves roughly: odd total = uneven content count in diff halves.
+	binData1 = binData[1:(floor(nrow(binData)/2)-1),]
+	binData2 = binData[floor(nrow(binData)/2):nrow(binData),]
+	
+	
+	#assign("paper_Mys_MCS_vs_IS",MCvsISbulk(MYSDATA,3:10),.GlobalEnv)
+	assign("paper_Mys_Halved_IS_vs_OOS",ISvsOOSbulk(binData1,binData2,3:10),.GlobalEnv)
+	assign("paper_Mys_Halved_MCS_vs_OOS",MCvsOOSbulk(binData1,binData2,3:10),.GlobalEnv)
+	#assign("paper_SciFi_IS_vs_Mys_IS", ISvsOOSbulk(convertToNum(SCIDATA),convertToNum(MYSDATA),3:10),.GlobalEnv)
 }
